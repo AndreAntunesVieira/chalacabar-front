@@ -3,7 +3,6 @@ require('dotenv').config()
 const express = require('express')
 const next = require('next')
 const routes = require('./_routes')
-const { listenMessage } = require('./helpers/server/ServerHelpers')
 
 const port = parseInt(process.env.PORT_SITE_SERVER, 10) || 3002
 const dev = process.env.NODE_ENV !== 'production'
@@ -26,5 +25,9 @@ async function openServer() {
       }
       return handler(req, res)
     })
-    .listen(port, listenMessage(port))
+    
+    .listen(port, err => {
+      if (err) throw err
+      process.stdout.write(`> Ready on https://localhost:${port}` + '\n')
+    })
 }
