@@ -1,0 +1,26 @@
+{
+  "short_name": "Chalaçabar",
+  "name": "Chalaça Bar Ipanema",
+  "icons": [
+    {
+      "src": "/img/pwa/pwa-1.png",
+      "type": "image/png",
+      "sizes": "48x48"
+    },
+    {
+      "src": "/img/pwa/pwa-2.png",
+      "type": "image/png",
+      "sizes": "96x96"
+    },
+    {
+      "src": "/img/pwa/pwa-3.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    }
+  ],
+  "start_url": "/novo",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#FFC501",
+  "theme_color": "#F6F5F5"
+}

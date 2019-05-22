@@ -1,0 +1,23 @@
+@keyframes hamburgerBefore {
+  0% {
+    transform: none;
+  }
+  50% {
+    transform: translate(0, 7px);
+  }
+  100% {
+    transform: rotate(45deg) translate(5px, 7px);
+  }
+}
+
+@keyframes hamburgerAfter {
+  0% {
+    transform: none;
+  }
+  50% {
+    transform: translate(0, -7px);
+  }
+  100% {
+    transform: rotate(-45deg) translate(4px, -6px);
+  }
+}
