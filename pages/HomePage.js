@@ -13,13 +13,9 @@ import PhotoAlbum from 'components/common/PhotoAlbum'
 import PhotoNotification from 'components/common/PhotoNotification'
 
 class HomePage extends Component {
-  static async getInitialProps({ req }) {
-    const [parties, photos, sponsors] = await Promise.all([
-      new PartiesModel(req).scheduled(),
-      new PhotosModel(req).last(),
-      new SponsorsModel(req).all(),
-    ])
-    return { parties, photos, sponsors }
+  static getInitialProps({ req }) {
+    return Promise.all([new PartiesModel(req).scheduled(), new PhotosModel(req).last(), new SponsorsModel(req).all()])
+      .then(([parties, photos, sponsors]) => ({ parties, photos, sponsors }))
   }
 
   state = { ...this.props }
@@ -34,12 +30,7 @@ class HomePage extends Component {
         e.preventDefault()
         deferredPrompt = e
         deferredPrompt.prompt()
-        deferredPrompt.userChoice.then(choiceResult => {
-          if (choiceResult.outcome === 'accepted') {
-            console.log('User accepted the A2HS prompt')
-          } else {
-            console.log('User dismissed the A2HS prompt')
-          }
+        deferredPrompt.userChoice.then(() => {
           deferredPrompt = null
         })
       })

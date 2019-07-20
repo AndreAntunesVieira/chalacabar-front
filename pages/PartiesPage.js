@@ -7,9 +7,8 @@ import MainView from 'components/views/MainView'
 import PartySmall from 'components/common/PartySmall'
 
 class PartiesPage extends Component {
-  static async getInitialProps({ req }) {
-    const parties = await new PartiesModel(req).all()
-    return { parties }
+  static getInitialProps({ req }) {
+    return new PartiesModel(req).all().then(parties => ({ parties }))
   }
 
   state = { ...this.props }

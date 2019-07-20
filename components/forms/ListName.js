@@ -64,7 +64,7 @@ class ListName extends Component {
     this.update()
   }
 
-  showPromoters = async () => {
+  showPromoters = () => {
     const promoter = !this.state.promoter
     this.setState({ promoter })
   }

@@ -10,9 +10,8 @@ import { showNotification } from 'store/NotificationStore'
 import TextsModel from 'models/TextsModel'
 
 class HomePage extends Component {
-  static async getInitialProps() {
-    const result = await new TextsModel().find('birthdate')
-    return { content: result.value }
+  static getInitialProps() {
+    return new TextsModel().find('birthdate').then(({ value }) => ({ content: value }))
   }
 
   state = { active: false }

@@ -8,15 +8,16 @@ import PhotoAlbum from 'components/common/PhotoAlbum'
 import A from 'components/common/A'
 
 export default class PhotoPage extends Component {
-  static async getInitialProps({ req, query }) {
+  static getInitialProps({ req, query }) {
     const page = Number(query.pag || 1)
     const slug = query.album
     const photoSlug = query.photoSlug
-    const album = await new PhotosModel(req).showAlbum(slug, page)
-    const photo = album.photos.find(p => p.src === photoSlug)
-    const index = album.photos.findIndex(p => p.src === photoSlug)
-    const max = album.photos.length - 1
-    return { page, photoSlug: query.photoSlug, photo, index, max, ...album }
+    return new PhotosModel(req).showAlbum(slug, page).then(album => {
+      const photo = album.photos.find(p => p.src === photoSlug)
+      const index = album.photos.findIndex(p => p.src === photoSlug)
+      const max = album.photos.length - 1
+      return { page, photoSlug: query.photoSlug, photo, index, max, ...album }
+    })
   }
 
   state = { ...this.props, maxPage: this.props.page, minPage: this.props.page, limit: 1000 }
@@ -40,7 +41,7 @@ export default class PhotoPage extends Component {
     return this.photo(1)
   }
 
-  photo(direction = 1){
+  photo(direction = 1) {
     const photo = this.props.photos[this.props.index + direction]
     return photo && `/fotos/${this.props.slug}/${photo.src}`
   }
@@ -50,8 +51,12 @@ export default class PhotoPage extends Component {
       <PageTitle>Fotos da festa {this.props.title} | Chalaça Bar Ipanema</PageTitle>
       <Section>
         <h1>
-          <span style={{fontSize: 16}}>Foto {this.props.index+1}/{this.props.max+1} da festa:</span>
-          <A style={{textDecoration: 'none'}} href={`/fotos/${this.props.slug}`}><b style={{display: 'block'}}>{this.props.title}</b></A>
+          <span style={{ fontSize: 16 }}>
+            Foto {this.props.index + 1}/{this.props.max + 1} da festa:
+          </span>
+          <A style={{ textDecoration: 'none' }} href={`/fotos/${this.props.slug}`}>
+            <b style={{ display: 'block' }}>{this.props.title}</b>
+          </A>
         </h1>
 
         <Button full info href={this.prev} disabled={this.props.index <= 0}>
@@ -72,15 +77,16 @@ export default class PhotoPage extends Component {
 
 const Section = styled.section`
   padding: 8px;
-  b, h1{
-    color: #F19816;
+  b,
+  h1 {
+    color: #f19816;
   }
-  img{
+  img {
     width: 100vw;
     margin: 0 -8px;
   }
-  @media (min-width: 1012px){
-    img{
+  @media (min-width: 1012px) {
+    img {
       width: 100vw;
       height: 56.7vw;
     }

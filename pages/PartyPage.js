@@ -16,14 +16,15 @@ import { showNotification } from 'store/NotificationStore'
 import PartyVipSubmition from 'components/forms/PartyVipSubmition'
 
 class PartyPage extends Component {
-  static async getInitialProps({ req, query }) {
+  static getInitialProps({ req, query }) {
     const slug = query.slug
-    const party = await new PartiesModel(req).find(slug)
-    const now = new Date()
-    now.setHours(now.getHours() - now.getTimezoneOffset()/60)
-    const dateTime = party.date.replace(/T.*/, `T${party.listTime}.000Z`)
-    const listBlocked = new Date(dateTime).getTime() < now.getTime()
-    return { ...party, now: now.toISOString().replace(/\.\d{3}Z/, '.000Z'), listBlocked, dateTime }
+    return new PartiesModel(req).find(slug).then(party => {
+      const now = new Date()
+      now.setHours(now.getHours() - now.getTimezoneOffset() / 60)
+      const dateTime = party.date.replace(/T.*/, `T${party.listTime}.000Z`)
+      const listBlocked = new Date(dateTime).getTime() < now.getTime()
+      return { ...party, now: now.toISOString().replace(/\.\d{3}Z/, '.000Z'), listBlocked, dateTime }
+    })
   }
 
   state = {
@@ -37,19 +38,21 @@ class PartyPage extends Component {
     femaleTax: 3.2,
   }
 
-  async componentWillMount() {
+  componentWillMount() {
     if (Side.client && window.location.hash) {
       this.hash = window.location.hash.replace('#', '')
       window.location.hash = ''
-      await delay(10)
-      const element = document.getElementById(this.hash)
-      if (!element) return null
-      window.scrollTo({ left: 0, top: element.getBoundingClientRect().top - 50, behavior: 'smooth' })
-      await delay(300)
-      if (this.hash === 'lista') {
-        const input = element.querySelector('input')
-        input && input.focus()
-      }
+      delay(10).then(() => {
+        const element = document.getElementById(this.hash)
+        if (!element) return null
+        window.scrollTo({ left: 0, top: element.getBoundingClientRect().top - 50, behavior: 'smooth' })
+        delay(300).then(() => {
+          if (this.hash === 'lista') {
+            const input = element.querySelector('input')
+            input && input.focus()
+          }
+        })
+      })
     }
   }
 
@@ -58,20 +61,21 @@ class PartyPage extends Component {
     return new PartySubscriptionsModel()
       .submit({ ...data, partyId: this.props.id })
       .then(() => {
-        this.props.showNotification({ text: 'Nome na lista confirmado :)', color: 'success'})
+        this.props.showNotification({ text: 'Nome na lista confirmado :)', color: 'success' })
         return target.reset()
       })
       .catch(e => {
-        this.props.showNotification({ text: e.data.error.toString(), color: 'danger'})
+        this.props.showNotification({ text: e.data.error.toString(), color: 'danger' })
       })
   }
 
-  update = async () => {
-    await delay(10)
-    const male = this.state.malePrice + this.state.maleTax
-    const female = this.state.femalePrice + this.state.femaleTax
-    const total = male * this.state.male + female * this.state.female
-    this.setState({ total })
+  update = () => {
+    return delay(10).then(() => {
+      const male = this.state.malePrice + this.state.maleTax
+      const female = this.state.femalePrice + this.state.femaleTax
+      const total = male * this.state.male + female * this.state.female
+      this.setState({ total })
+    })
   }
 
   render = () => (
@@ -129,7 +133,12 @@ class PartyPage extends Component {
         <Description {...this.props} />
       </section>
       <section className="ph8 mh8" id="lista">
-        <ListName onSubmit={this.onSubmit} reset={this.reset} blocked={this.props.listBlocked} listTime={this.props.listTime.replace(/(.*:.*):.*/, '$1')} />
+        <ListName
+          onSubmit={this.onSubmit}
+          reset={this.reset}
+          blocked={this.props.listBlocked}
+          listTime={this.props.listTime.replace(/(.*:.*):.*/, '$1')}
+        />
       </section>
       <section className="ph8 mh8" id="vip">
         <PartyVipSubmition partyId={this.props.id} date={this.props.date} />
@@ -219,5 +228,7 @@ const DescriptionContainer = styled.div`
 const infos = `- 3248-2357 Escritório horário comercial
 - 99257-1590 Whatsapp atendimento horário comercial`
 
-
-export default connect(null, { showNotification })(PartyPage)
+export default connect(
+  null,
+  { showNotification }
+)(PartyPage)

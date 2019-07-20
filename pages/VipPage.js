@@ -5,9 +5,8 @@ import MainView from 'components/views/MainView'
 import TextsModel from 'models/TextsModel'
 
 export default class VipPage extends Component {
-  static async getInitialProps() {
-    const result = await new TextsModel().find('vip')
-    return { content: result.value }
+  static getInitialProps() {
+    return new TextsModel().find('vip').then(({ value }) => ({ content: value }))
   }
 
   render = () => (

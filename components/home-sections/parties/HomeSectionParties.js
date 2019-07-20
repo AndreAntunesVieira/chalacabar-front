@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import delay from 'timeout-as-promise'
 import HomeSectionPartiesImage from 'components/home-sections/parties/HomeSectionPartiesImage'
 import HomeSectionPartiesSelector from 'components/home-sections/parties/HomeSectionPartiesSelector'
 import { isIos } from 'helpers/DeviceHelpers'
@@ -49,13 +50,11 @@ export default class HomeSectionParties extends Component {
     if (delta < -0.05 || distance < -30) return this.rollOnTouchEnd(-1)
   }
 
-  async rollOnTouchEnd(step) {
-    return this.rollTo(this.state.active + step, true)
-  }
-
   componentWillUnmount() {
     clearInterval(this.interval)
   }
+
+  rollOnTouchEnd = step => this.rollTo(this.state.active + step, true)
 
   next = () => {
     let active = this.state.active + 1
@@ -65,13 +64,13 @@ export default class HomeSectionParties extends Component {
 
   rollTo = active => {
     const slider = this.slider.current
-    if(!slider) return null
+    if (!slider) return null
     const left = slider.clientWidth * active
     this.smoothScroll(left)
     this.setState({ active })
   }
 
-  smoothScroll = async (left, step = null) => {
+  smoothScroll = (left, step = null) => {
     if (left < 0) return null
     if (!isIos()) return this.slider.current.scrollTo({ left, top: 0, behavior: 'smooth' })
     const slider = this.slider.current
@@ -79,8 +78,7 @@ export default class HomeSectionParties extends Component {
     if (Math.abs(diff) <= 10) return slider.scrollTo({ left })
     if (!step) step = diff / 15
     slider.scrollTo({ left: slider.scrollLeft + step })
-    await delay(10)
-    return this.smoothScroll(left, step)
+    return delay(10).then(() => this.smoothScroll(left, step))
   }
 
   onMouseEnter = () => {

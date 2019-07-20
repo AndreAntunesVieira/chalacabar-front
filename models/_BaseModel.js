@@ -3,9 +3,7 @@ import querystring from 'querystring'
 import Side from 'helpers/Side'
 
 export default class BaseModel {
-  baseUrl = process.env.API ||
-    // 'https://chalacabar.com.br/api' ||
-    'http://local.chalacabar.com.br:3001'
+  baseUrl = process.env.API
   route = ''
 
   constructor(req = {}, options = {}) {
@@ -25,7 +23,7 @@ export default class BaseModel {
   options(options = {}) {
     const parsedOptions = {}
     parsedOptions.method = options.method || 'GET'
-    const headers = { ['Content-Type']: 'application/json', ...this.defaultOptions.headers, ...options.headers }
+    const headers = { ['Content-Type']: 'multipart/form-data', ...this.defaultOptions.headers, ...options.headers }
     parsedOptions.headers = Side.server ? headers : new Headers(headers)
     if (options.data) parsedOptions.body = JSON.stringify(options.data)
     return parsedOptions
@@ -44,15 +42,12 @@ export default class BaseModel {
 
   request({ route = '', ...opt }) {
     const options = this.options(opt)
-    return fetch(this.path(route, options), options).then(async r => {
+    return fetch(this.path(route, options), options).then(r => {
       if (r.status < 400 && !options.full) return this.json(r)
-      const data = await this.json(r)
-      const result = {
-        data,
-        headers: r.headers,
-        status: r.status,
-      }
-      return r.status < 400 ? result : Promise.reject(result)
+      return this.json(r).then(data => {
+        const result = { data, headers: r.headers, status: r.status }
+        return r.status < 400 ? result : Promise.reject(result)
+      })
     })
   }
 

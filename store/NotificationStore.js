@@ -5,11 +5,10 @@ const types = {
   NOTIFICATION_CLOSE: 'NOTIFICATION/CLOSE',
 }
 
-export const showNotification = ({ duration = 5000, ...options }) => async dispatch => {
+export const showNotification = ({ duration = 5000, ...options }) => dispatch => {
   const id = Math.random()
   dispatch({ type: types.NOTIFICATION_SHOW, id, ...options })
-  await delay(duration)
-  dispatch({ type: types.NOTIFICATION_CLOSE, id })
+  return delay(duration).then(() => dispatch({ type: types.NOTIFICATION_CLOSE, id }))
 }
 
 export default function reducer(state = {}, { type, ...action }) {

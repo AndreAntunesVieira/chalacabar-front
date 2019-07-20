@@ -7,11 +7,10 @@ import Button from 'components/common/Button'
 import PhotoAlbum from 'components/common/PhotoAlbum'
 
 export default class AlbumPage extends Component {
-  static async getInitialProps ({ req, query }) {
+  static getInitialProps({ req, query }) {
     const page = Number(query.pag || 1)
     const slug = query.album
-    const album = await new PhotosModel(req).showAlbum(slug, page)
-    return { page, ...album }
+    return new PhotosModel(req).showAlbum(slug, page).then(album => ({ page, ...album }))
   }
 
   state = { ...this.props, maxPage: this.props.page, minPage: this.props.page, limit: 1000 }
@@ -38,12 +37,12 @@ export default class AlbumPage extends Component {
     })
   }
 
-  get min () {
+  get min() {
     if (this.state.minPage <= 1) return 1
     return this.state.minPage - 1
   }
 
-  get max () {
+  get max() {
     if (this.state.maxPage >= this.state.limit) return this.state.limit
     return this.state.maxPage + 1
   }
@@ -76,24 +75,25 @@ const Section = styled.section`
   flex-direction: column;
   flex-wrap: wrap;
   padding: 8px;
-  b, h1{
-    color: #F19816;
+  b,
+  h1 {
+    color: #f19816;
   }
-  h1{
+  h1 {
     width: 100%;
   }
-  img{
+  img {
     width: 100vw;
     margin: 0 -8px;
   }
-  @media (min-width: 1012px){
+  @media (min-width: 1012px) {
     flex-direction: row;
     justify-content: center;
-    .banner{
+    .banner {
       width: 272px;
       height: 156px;
     }
-    img{
+    img {
       width: 256px;
       height: 140px;
     }

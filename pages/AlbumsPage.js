@@ -8,10 +8,9 @@ import Button from 'components/common/Button'
 import PhotoNotification from 'components/common/PhotoNotification'
 
 export default class AlbumsPage extends Component {
-  static async getInitialProps({ req, query }) {
+  static getInitialProps({ req, query }) {
     const page = Number(query.pag || 1)
-    const [photos] = await Promise.all([new PhotosModel(req).all(page)])
-    return { photos, page }
+    return new PhotosModel(req).all(page).then(photos => ({ photos, page }))
   }
 
   state = { ...this.props, maxPage: this.props.page, minPage: this.props.page, limit: 1000 }
@@ -63,9 +62,9 @@ export default class AlbumsPage extends Component {
         ))}
         <PhotoNotification />
         {/*{this.state.maxPage < this.state.limit && (*/}
-          {/*<Button full info onClick={this.loadMore} href={`/fotos?pag=${this.max}`}>*/}
-            {/*Carregar mais fotos*/}
-          {/*</Button>*/}
+        {/*<Button full info onClick={this.loadMore} href={`/fotos?pag=${this.max}`}>*/}
+        {/*Carregar mais fotos*/}
+        {/*</Button>*/}
         {/*)}*/}
       </Section>
     </MainView>

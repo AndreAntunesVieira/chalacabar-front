@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from '_routes'
+import { Link } from 'routes'
 import { isExternalUrl } from 'helpers/UrlHelpers'
 
 export default function A({ href, ...props }) {
