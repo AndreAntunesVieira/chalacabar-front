@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import { withScriptjs, withGoogleMap, GoogleMap, Marker } from 'react-google-maps'
+import { GoogleMap, Marker, withGoogleMap, withScriptjs } from 'react-google-maps'
 import styled from 'styled-components'
-import PartiesRequests from 'requests/PartiesRequests'
-import PageTitle from 'components/common/PageTitle'
-import MainView from 'components/views/MainView'
-import PartySmall from 'components/common/PartySmall'
+import PartiesRequests from '../../requests/PartiesRequests'
+import PageTitle from '../../components/common/PageTitle'
+import MainView from '../../components/views/MainView'
+import PartySmall from '../../components/common/PartySmall'
 
 class PartiesPage extends Component {
   static getInitialProps({ req }) {

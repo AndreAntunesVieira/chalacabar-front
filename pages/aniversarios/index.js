@@ -1,15 +1,15 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
-import PageTitle from 'components/common/PageTitle'
-import MainView from 'components/views/MainView'
-import Button from 'components/common/Button'
-import BirthDateForm from 'components/forms/BirthDateForm'
-import BirthDatesModel from 'requests/BirthDateRequests'
-import { showNotification } from 'store/NotificationStore'
-import TextsRequests from 'requests/TextsRequests'
+import PageTitle from '../../components/common/PageTitle'
+import MainView from '../../components/views/MainView'
+import Button from '../../components/common/Button'
+import BirthDateForm from '../../components/forms/BirthDateForm'
+import BirthDatesModel from '../../requests/BirthDateRequests'
+import { showNotification } from '../../store/NotificationStore'
+import TextsRequests from '../../requests/TextsRequests'
 
-class HomePage extends Component {
+class BirthDatePage extends Component {
   static getInitialProps() {
     return new TextsRequests().find('birthdate').then(({ value }) => ({ content: value }))
   }
@@ -86,7 +86,4 @@ const SectionForm = styled.section`
   padding: 8px;
 `
 
-export default connect(
-  null,
-  { showNotification }
-)(HomePage)
+export default connect( null, { showNotification } )(BirthDatePage)

@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import PageTitle from 'components/common/PageTitle'
-import MainView from 'components/views/MainView'
-import PhotosRequests from 'requests/PhotosRequests'
-import Button from 'components/common/Button'
-import PhotoAlbum from 'components/common/PhotoAlbum'
-import A from 'components/common/A'
+import PageTitle from '../../../components/common/PageTitle'
+import MainView from '../../../components/views/MainView'
+import PhotosRequests from '../../../requests/PhotosRequests'
+import Button from '../../../components/common/Button'
+import PhotoAlbum from '../../../components/common/PhotoAlbum'
+import A from '../../../components/common/A'
 
-export default class PhotoPage extends Component {
+export default class PhotoSlug extends Component {
   static getInitialProps({ req, query }) {
     const page = Number(query.pag || 1)
     const slug = query.album

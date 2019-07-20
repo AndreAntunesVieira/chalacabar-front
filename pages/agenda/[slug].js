@@ -2,20 +2,19 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import delay from 'timeout-as-promise'
 import styled from 'styled-components'
-import PartiesRequests from 'requests/PartiesRequests'
-import Side from 'helpers/Side'
-import MainView from 'components/views/MainView'
-import HomeSectionPartiesImage from 'components/home-sections/parties/HomeSectionPartiesImage'
-import Button from 'components/common/Button'
-import ListName from 'components/forms/ListName'
-import DangerousHTML from 'components/common/DangerousHTML'
-import { currency } from 'helpers/Currency'
-import PageTitle from 'components/common/PageTitle'
-import PartySubscriptionsRequests from 'requests/PartySubscriptionsRequests'
-import { showNotification } from 'store/NotificationStore'
-import PartyVipSubmition from 'components/forms/PartyVipSubmition'
+import PartiesRequests from '../../requests/PartiesRequests'
+import Side from '../../helpers/Side'
+import MainView from '../../components/views/MainView'
+import HomeSectionPartiesImage from '../../components/home-sections/parties/HomeSectionPartiesImage'
+import Button from '../../components/common/Button'
+import ListName from '../../components/forms/ListName'
+import DangerousHTML from '../../components/common/DangerousHTML'
+import PageTitle from '../../components/common/PageTitle'
+import PartySubscriptionsRequests from '../../requests/PartySubscriptionsRequests'
+import { showNotification } from '../../store/NotificationStore'
+import PartyVipSubmition from '../../components/forms/PartyVipSubmition'
 
-class PartyPage extends Component {
+class Slug extends Component {
   static getInitialProps({ req, query }) {
     const slug = query.slug
     return new PartiesRequests(req).find(slug).then(party => {
@@ -82,50 +81,11 @@ class PartyPage extends Component {
     <MainView>
       <PageTitle>{this.props.title} | Chalaça Bar Ipanema</PageTitle>
       <HomeSectionPartiesImage {...this.props} hasList={false} purchasable={false} />
-      {this.props.purchasable && (
+
+      {this.props.ticketLink && (
         <section className="ph8" id="comprar">
-          <h1>Compre agora seu ingresso antecipado</h1>
-          <Tickets>
-            <div className="flex">
-              <div className="grow">
-                <h4>Masculino:</h4>
-                <h6>
-                  R${currency(this.state.malePrice)} + Taxa R${currency(this.state.maleTax)}
-                </h6>
-              </div>
-              <div className="sex-column">
-                <h4>R${currency(this.state.malePrice + this.state.maleTax)}</h4>
-              </div>
-              <div className="num-column">
-                <button onClick={this.increase('male')}>+</button>
-                <div>{this.state.male}</div>
-                <button onClick={this.decrease('male')}>-</button>
-              </div>
-            </div>
-            <div className="flex">
-              <div className="grow">
-                <h4>Feminino:</h4>
-                <h6>
-                  R${currency(this.state.femalePrice)} + Taxa R${currency(this.state.femaleTax)}
-                </h6>
-              </div>
-              <div className="sex-column">
-                <h4>R${currency(this.state.femalePrice + this.state.femaleTax)}</h4>
-              </div>
-              <div className="num-column">
-                <button onClick={this.increase('female')}>+</button>
-                <div>{this.state.female}</div>
-                <button onClick={this.decrease('female')}>-</button>
-              </div>
-            </div>
-          </Tickets>
-          <div className="flex justify-end">
-            <TicketTotal>
-              <b>Total</b>
-              <b>R${currency(this.state.total)}</b>
-              <Button success>Comprar</Button>
-            </TicketTotal>
-          </div>
+          <h1>Compre agora seu ingresso agora mesmo!</h1>
+          <Button large success href={this.props.ticketLink}>Ver opções de compra</Button>
         </section>
       )}
       <section className="ph8" id="descricao">
@@ -147,7 +107,7 @@ class PartyPage extends Component {
   )
 }
 
-function Description({ description, attractions, promos, tickets, label = '' }) {
+function Description({ description, attractions, promos, tickets, label = '', buyLink }) {
   if (!attractions && !description) return null
   if (!attractions) {
     return (
@@ -161,7 +121,7 @@ function Description({ description, attractions, promos, tickets, label = '' }) 
     <>
       <Description label="Atrações:" description={attractions} />
       <Description label="Promoções:" description={promos} />
-      <Description label="Ingressos:" description={tickets} />
+      <Description label="Ingressos:" description={tickets} buyLink={buyLink} />
       <Description label="Informações e reservas:" description={infos} />
     </>
   )
@@ -231,4 +191,4 @@ const infos = `- 3248-2357 Escritório horário comercial
 export default connect(
   null,
   { showNotification }
-)(PartyPage)
+)(Slug)

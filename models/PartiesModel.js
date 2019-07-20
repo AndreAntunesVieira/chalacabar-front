@@ -38,6 +38,7 @@ export default class PartiesModel extends BaseModel {
   }) {
     return {
       ...party,
+      ticketLink: 'abc',
       title: titulo,
       description: descricao,
       listTime: tempolista,

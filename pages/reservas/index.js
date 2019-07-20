@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import PageTitle from 'components/common/PageTitle'
-import MainView from 'components/views/MainView'
-import TextsRequests from 'requests/TextsRequests'
+import PageTitle from '../../components/common/PageTitle'
+import MainView from '../../components/views/MainView'
+import TextsRequests from '../../requests/TextsRequests'
 
 export default class VipPage extends Component {
   static getInitialProps() {

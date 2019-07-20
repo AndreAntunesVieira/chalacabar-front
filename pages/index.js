@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { withScriptjs, withGoogleMap, GoogleMap, Marker } from 'react-google-maps'
+import { GoogleMap, Marker, withGoogleMap, withScriptjs } from 'react-google-maps'
 import styled from 'styled-components'
 import Side from 'helpers/Side'
 import PartiesRequests from 'requests/PartiesRequests'
@@ -12,7 +12,7 @@ import MainView from 'components/views/MainView'
 import PhotoAlbum from 'components/common/PhotoAlbum'
 import PhotoNotification from 'components/common/PhotoNotification'
 
-class HomePage extends Component {
+class Index extends Component {
   static getInitialProps({ req }) {
     return Promise.all([new PartiesRequests(req).scheduled(), new PhotosRequests(req).last(), new SponsorsRequests(req).all()])
       .then(([parties, photos, sponsors]) => ({ parties, photos, sponsors }))
@@ -101,7 +101,7 @@ const MyMapComponent = withScriptjs(
     </GoogleMap>
   ))
 )
-export default HomePage
+export default Index
 
 const Address = styled.div`
   text-align: center;

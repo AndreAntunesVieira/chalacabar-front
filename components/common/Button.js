@@ -2,12 +2,18 @@ import React from 'react'
 import styled from 'styled-components'
 import A from 'components/common/A'
 
-function ButtonComponent({ href, warning, full, success, info, ...props }) {
-  const Component = href ? A : 'button'
-  return <Component {...props} href={href} />
+function ButtonComponent ({ href, warning, full, success, info, ...props }) {
+  return <Selector {...props} href={href} />
+}
+
+function Selector (props) {
+  if (props.href) return <A {...props} />
+  return <button {...props} />
 }
 
 const Button = styled(ButtonComponent)`
+  padding-left: 8px;
+  padding-right: 8px;
   box-sizing: border-box;
   appearance: none;
   background-color: transparent;
@@ -43,6 +49,7 @@ const Button = styled(ButtonComponent)`
   &:active {
     transform: translateY(1px);
   }
+  ${props => props.large && 'padding: 8px 16px'}
   ${props => colors(props)}
   ${props => props.disabled && 'opacity: 0.2;'}
 `

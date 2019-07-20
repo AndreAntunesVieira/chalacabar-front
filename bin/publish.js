@@ -4,7 +4,7 @@ const processExec = require('child_process').exec
 const exec = command =>
   new Promise((resolve, reject) => processExec(command, (err, content) => (err ? reject(err) : resolve(content))))
 
-exec('rm -rf .build/*')
+exec('rm -rf .build/* || exit 0 && rm -rf .build/.next || exit 0')
   .then(() => exec(`cp -R public .build/`))
   .then(() => exec(`cp -R components .build/`))
   .then(() => exec(`cp -R pages .build/`))
@@ -12,7 +12,8 @@ exec('rm -rf .build/*')
   .then(() => exec(`cp -R requests .build/`))
   .then(() => exec(`cp -R models .build/`))
   .then(() => exec(`cp -R helpers .build/`))
-  .then(() => exec(`cp -R routes.js .build/`))
+  .then(() => exec(`cp -R .babelrc .build/`))
+  .then(() => exec(`cp -R bin/postinstall.js .build/`))
   .then(server)
   .then(packJson)
 
@@ -23,11 +24,7 @@ function server(){
 
 function packJson(){
   const pack = require('../package.json')
-  delete(pack.scripts['build:next'])
   delete(pack.devDependencies)
-  delete(pack.dependencies.dotenv)
-  delete(pack.dependencies['dotenv-webpack'])
-  pack.scripts.build = 'next build'
-  pack.scripts.postinstall = 'npm run build'
+  pack.scripts.postinstall = 'next build'
   fs.writeFileSync('.build/package.json', JSON.stringify(pack))
 }

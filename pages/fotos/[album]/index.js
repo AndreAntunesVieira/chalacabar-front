@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import PageTitle from 'components/common/PageTitle'
-import MainView from 'components/views/MainView'
-import PhotosRequests from 'requests/PhotosRequests'
-import Button from 'components/common/Button'
-import PhotoAlbum from 'components/common/PhotoAlbum'
+import PageTitle from '../../../components/common/PageTitle'
+import MainView from '../../../components/views/MainView'
+import PhotosRequests from '../../../requests/PhotosRequests'
+import Button from '../../../components/common/Button'
+import PhotoAlbum from '../../../components/common/PhotoAlbum'
 
 export default class AlbumPage extends Component {
   static getInitialProps({ req, query }) {

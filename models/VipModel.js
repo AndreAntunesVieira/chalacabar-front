@@ -8,13 +8,9 @@ export default class PartySubscriptionsModel extends BaseModel {
       partyId,
       tableNumber,
     ])
-      .then(() => {
-        console.log('Humm')
-        return Promise.reject('empty')
-      })
+      .then(() => Promise.reject('empty'))
       .catch(error => {
         if (error === 'empty') return Promise.reject(false)
-        console.log(error)
         return Promise.resolve(true)
       })
   }
@@ -31,7 +27,7 @@ export default class PartySubscriptionsModel extends BaseModel {
   create = ({ partyId, name, phone, email, tableNumber, status = 'awaiting_approval' }) => {
     return this.insertFromEntriesAndGetID(
       ['party_id', 'name', 'phone', 'email', 'table_number', 'status'],
-      [partyId, name, phone, email, tableNumber, status]
+      [partyId, name, phone, email, tableNumber, status],
     )
   }
 }
