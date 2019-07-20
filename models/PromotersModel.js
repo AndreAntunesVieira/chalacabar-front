@@ -1,4 +1,4 @@
-import BaseModel from '_BaseModel'
+import BaseModel from 'models/_BaseModel'
 import { slugify } from '../helpers/prototypes/StringPrototype'
 
 export default class SponsorsModel extends BaseModel {

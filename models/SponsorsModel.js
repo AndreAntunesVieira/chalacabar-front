@@ -1,4 +1,4 @@
-import BaseModel from '_BaseModel'
+import BaseModel from 'models/_BaseModel'
 
 export default class SponsorsModel extends BaseModel {
   static defaultSelect = ['src', 'link', 'titulo'].join(',')

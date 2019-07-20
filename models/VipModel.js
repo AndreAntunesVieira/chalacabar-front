@@ -1,4 +1,4 @@
-import BaseModel from '_BaseModel'
+import BaseModel from 'models/_BaseModel'
 
 export default class PartySubscriptionsModel extends BaseModel {
   table = 'vip'
