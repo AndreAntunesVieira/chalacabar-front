@@ -1,5 +1,5 @@
-import BaseModel from 'api/models/_BaseModel'
-import { slugify } from 'api/helpers/StringHelpers'
+import BaseModel from '_BaseModel'
+import { slugify } from '../helpers/prototypes/StringPrototype'
 
 export default class SponsorsModel extends BaseModel {
   find = (name, pass) => {

@@ -1,4 +1,4 @@
-import BirthDatesModel from 'api/models/BirthDatesModel'
+import BirthDatesModel from 'models/BirthDatesModel'
 import { sendCreated, sendNotFound, sendUnprocessableEntity } from 'helpers/api/SendResponse'
 
 export default (req, res) => {

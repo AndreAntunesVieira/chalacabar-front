@@ -3,10 +3,9 @@ require('dotenv').config()
 const express = require('express')
 const next = require('next')
 const routes = require('./routes')
-// const api = require('./api').default
 const bodyParser = require('body-parser')
 
-const port = parseInt(process.env.PORT, 10) || 3002
+const PORT = process.env.PORT || '3002'
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
 const handler = routes.getRequestHandler(app)
@@ -16,7 +15,6 @@ app.prepare().then(openServer)
 function openServer() {
   express()
     .use(express.static('public'))
-    // .use('/api', api)
     .get(/\/\/.*/, (req, res, next) => next())
     .use(bodyParser.json())
     .use((req, res) => {
@@ -27,9 +25,5 @@ function openServer() {
       if (req.url.match(/^\/\//)) req.url = req.url.replace(/^\/\//, '/')
       return handler(req, res)
     })
-    
-    .listen(port, err => {
-      if (err) throw err
-      process.stdout.write(`> Ready on https://localhost:${port}` + '\n')
-    })
+    .listen(PORT, () => process.stdout.write(`Server Ready on port:${PORT}\n`))
 }

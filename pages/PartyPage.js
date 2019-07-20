@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import delay from 'timeout-as-promise'
 import styled from 'styled-components'
-import PartiesModel from 'models/PartiesModel'
+import PartiesRequests from 'requests/PartiesRequests'
 import Side from 'helpers/Side'
 import MainView from 'components/views/MainView'
 import HomeSectionPartiesImage from 'components/home-sections/parties/HomeSectionPartiesImage'
@@ -11,14 +11,14 @@ import ListName from 'components/forms/ListName'
 import DangerousHTML from 'components/common/DangerousHTML'
 import { currency } from 'helpers/Currency'
 import PageTitle from 'components/common/PageTitle'
-import PartySubscriptionsModel from 'models/PartySubscriptionsModel'
+import PartySubscriptionsRequests from 'requests/PartySubscriptionsRequests'
 import { showNotification } from 'store/NotificationStore'
 import PartyVipSubmition from 'components/forms/PartyVipSubmition'
 
 class PartyPage extends Component {
   static getInitialProps({ req, query }) {
     const slug = query.slug
-    return new PartiesModel(req).find(slug).then(party => {
+    return new PartiesRequests(req).find(slug).then(party => {
       const now = new Date()
       now.setHours(now.getHours() - now.getTimezoneOffset() / 60)
       const dateTime = party.date.replace(/T.*/, `T${party.listTime}.000Z`)
@@ -58,7 +58,7 @@ class PartyPage extends Component {
 
   onSubmit = (e, data) => {
     const target = e.target
-    return new PartySubscriptionsModel()
+    return new PartySubscriptionsRequests()
       .submit({ ...data, partyId: this.props.id })
       .then(() => {
         this.props.showNotification({ text: 'Nome na lista confirmado :)', color: 'success' })

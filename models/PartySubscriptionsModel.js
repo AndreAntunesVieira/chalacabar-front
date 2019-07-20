@@ -1,19 +1,22 @@
-import 'isomorphic-unfetch'
-import BaseModel from './_BaseModel'
+import BaseModel from '_BaseModel'
 
 export default class PartySubscriptionsModel extends BaseModel {
-  route = 'party-subscriptions'
-  all() {
-    if(this.notAdmin) return this.crashNotAdmin
-    return this.get()
+  table = 'party_subscriptions'
+
+  inviteBatch = friends => {
+    const invites = friends.map(({ partyId, name, invitedBy, promoterId }) => [
+      partyId,
+      name,
+      invitedBy,
+      promoterId,
+    ])
+    return this.insertBatch(['party_id', 'name', 'invited_by', 'promoter_id'], invites)
   }
 
-  find(partySlug) {
-    if(this.notAdmin) return this.crashNotAdmin
-    return this.get({ route: partySlug })
-  }
-
-  submit(data) {
-    return this.post({ data })
+  create = ({ partyId, name, phone, promoterId }) => {
+    return this.insertFromEntriesAndGetID(
+      ['party_id', 'name', 'phone', 'promoter_id'],
+      [partyId, name, phone, promoterId]
+    )
   }
 }

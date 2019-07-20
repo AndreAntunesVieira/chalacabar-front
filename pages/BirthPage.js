@@ -5,13 +5,13 @@ import PageTitle from 'components/common/PageTitle'
 import MainView from 'components/views/MainView'
 import Button from 'components/common/Button'
 import BirthDateForm from 'components/forms/BirthDateForm'
-import BirthDatesModel from 'models/BirthDateModel'
+import BirthDatesModel from 'requests/BirthDateRequests'
 import { showNotification } from 'store/NotificationStore'
-import TextsModel from 'models/TextsModel'
+import TextsRequests from 'requests/TextsRequests'
 
 class HomePage extends Component {
   static getInitialProps() {
-    return new TextsModel().find('birthdate').then(({ value }) => ({ content: value }))
+    return new TextsRequests().find('birthdate').then(({ value }) => ({ content: value }))
   }
 
   state = { active: false }

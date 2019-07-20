@@ -2,11 +2,11 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import PageTitle from 'components/common/PageTitle'
 import MainView from 'components/views/MainView'
-import TextsModel from 'models/TextsModel'
+import TextsRequests from 'requests/TextsRequests'
 
 export default class VipPage extends Component {
   static getInitialProps() {
-    return new TextsModel().find('vip').then(({ value }) => ({ content: value }))
+    return new TextsRequests().find('vip').then(({ value }) => ({ content: value }))
   }
 
   render = () => (

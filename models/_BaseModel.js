@@ -1,61 +1,102 @@
-import 'isomorphic-unfetch'
-import querystring from 'querystring'
-import Side from 'helpers/Side'
+import mysql from 'mysql'
+
+let connected = false
+let connection
 
 export default class BaseModel {
-  baseUrl = process.env.API
-  route = ''
+  constructor() {}
 
-  constructor(req = {}, options = {}) {
-    this.req = req
-    this.defaultOptions = options
-  }
-
-  get notAdmin() {
-    return true //TODO adicionar validação de admin logado
-  }
-
-  crashNotAdmin = () => {
-    alert('Apenas admins podem executar este comando!')
-    throw new Error('NOT ADMIN')
-  }
-
-  options(options = {}) {
-    const parsedOptions = {}
-    parsedOptions.method = options.method || 'GET'
-    const headers = { ['Content-Type']: 'multipart/form-data', ...this.defaultOptions.headers, ...options.headers }
-    parsedOptions.headers = Side.server ? headers : new Headers(headers)
-    if (options.data) parsedOptions.body = JSON.stringify(options.data)
-    return parsedOptions
-  }
-
-  path(route, opt) {
-    let path = `${this.route}/${route}`
-      .replace(/\/\//g, '/')
-      .replace(/\/$/, '')
-      .replace(/^\//, '')
-    if (opt.method !== 'GET' || !opt.data) return `${this.baseUrl}/${path}`
-    return `${this.baseUrl}/${path}?${querystring.stringify(opt.data)}`
-  }
-
-  json = r => Promise.resolve(r.json()).catch(() => null)
-
-  request({ route = '', ...opt }) {
-    const options = this.options(opt)
-    return fetch(this.path(route, options), options).then(r => {
-      if (r.status < 400 && !options.full) return this.json(r)
-      return this.json(r).then(data => {
-        const result = { data, headers: r.headers, status: r.status }
-        return r.status < 400 ? result : Promise.reject(result)
+  connect = () => {
+    if (connected) return Promise.resolve(connection)
+    if (connection) return this._waitConnection()
+    return new Promise((resolve, reject) => {
+      connection = mysql.createConnection({
+        host: process.env.DB_HOST,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASS,
+        database: process.env.DB_NAME,
       })
+      connection.connect(err => (err ? reject(err) : resolve(connection)))
+      connected = true
     })
   }
 
-  get(options = {}) {
-    return this.request(options)
+  insertFromObject(data){
+    const {fields, values} = Object.entries(data).reduce((result, [field, value]) => {
+      result.fields.push(field)
+      result.values.push(value)
+      return result
+    },{fields: [], values: []})
+    return this.insertFromEntriesAndGetID(fields, values)
   }
 
-  post(options = {}) {
-    return this.request({ ...options, method: 'POST' })
+  insertFromEntriesAndGetID(fields = [], values = []) {
+    const fullFields = [...fields, 'created_at', 'updated_at'].join(',')
+    const fullValues = [...values.map(() => '?'), 'NOW()', 'NOW()'].join(',')
+    return this.query(
+      `INSERT INTO ${this.table} (${fullFields}) VALUES (${fullValues});`,
+      values
+    )
+      .then(() => this.querySingle('SELECT LAST_INSERT_ID() id;'))
+      .then(({ id }) => id)
+  }
+
+  insertBatch(fields, batch) {
+    console.log(fields)
+    console.log(batch)
+    const values = []
+    const fullFields = [...fields, 'created_at', 'updated_at'].join(',')
+    const fullValues = batch.map(v => {
+      const vars = v.map(a => {
+        values.push(a)
+        return '?'
+      })
+      vars.push('NOW()')
+      vars.push('NOW()')
+      return vars.join(',')
+    }).join('),(')
+    console.log(`INSERT INTO ${this.table} (${fullFields}) VALUES (${fullValues})`)
+    return this.query(`INSERT INTO ${this.table} (${fullFields}) VALUES (${fullValues})`, values)
+  }
+
+  static close() {
+    if (connection) connection.resume()
+    connected = false
+  }
+
+  querySingle = (...args) =>
+    this.query(...args).then(results =>
+      Array.isArray(results) && results[0] ? results[0] : Promise.reject()
+    )
+
+  query = (sql, values) => {
+    return this.connect().then(connection => {
+      if (Array.isArray(values))
+        return new Promise(this._queryWithValues(connection, sql, values))
+      if (typeof values !== 'undefined')
+        return new Promise(this._queryWithValues(connection, sql, [values]))
+      return new Promise(this._queryWithoutValues(connection, sql))
+    })
+  }
+
+  _queryWithValues(connection, sql, values) {
+    return (resolve, reject) => {
+      connection.query(sql, values, (err, result) =>
+        err ? reject(err) : resolve(result)
+      )
+    }
+  }
+
+  _queryWithoutValues(connection, sql) {
+    return (resolve, reject) => {
+      connection.query(sql, (err, result) =>
+        err ? reject(err) : resolve(result)
+      )
+    }
+  }
+
+  _waitConnection = () => {
+    if (connection.state === 'authenticated') return connection
+    return new Promise(() => setTimeout(this._waitConnection, 50))
   }
 }

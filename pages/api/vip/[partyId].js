@@ -1,4 +1,4 @@
-import VipModel from 'api/models/VipModel'
+import VipModel from 'models/VipModel'
 import { sendOk } from 'helpers/api/SendResponse'
 
 export default (req, res) => {

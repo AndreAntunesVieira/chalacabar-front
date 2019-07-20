@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
-import VipModel from 'models/VipModel'
+import VipRequests from 'requests/VipRequests'
 import { serializeForm } from 'helpers/FormSerializer'
 import TextInput from 'components/common/TextInput'
 import PhoneNormalizer from 'helpers/normalizers/PhoneNormalizer'
@@ -17,7 +17,7 @@ class PartyVipSubmition extends Component {
     const date = new Date(this.props.date)
     const isSaturday = date.getDay() === 6
     this.setState({ isSaturday })
-    new VipModel().getPartyTables(this.props.partyId).then(({ reservedTables }) => {
+    new VipRequests().getPartyTables(this.props.partyId).then(({ reservedTables }) => {
       const finished = reservedTables.length === 25
       const options = [
         { value: 31, disabled: reservedTables.includes(31), children: 'Camarote 1' },
@@ -70,7 +70,7 @@ class PartyVipSubmition extends Component {
     )
     if (!conf) return null
     data.partyId = this.props.partyId
-    return new VipModel()
+    return new VipRequests()
       .submit(data)
       .then(() => {
         this.props.showNotification({

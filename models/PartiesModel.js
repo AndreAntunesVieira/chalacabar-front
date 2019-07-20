@@ -1,25 +1,74 @@
-import 'isomorphic-unfetch'
-import BaseModel from './_BaseModel'
+import BaseModel from '_BaseModel'
 
 export default class PartiesModel extends BaseModel {
-  route = 'parties'
-  all() {
-    return this.get()
-      .then(parties => parties.map(parse))
+  static defaultSelect = [
+    'uid as id',
+    'src',
+    'src2',
+    'src3',
+    'titulo',
+    'descricao',
+    'data as date',
+    'href as slug',
+    'status',
+    'nomenalista',
+    'tempolista',
+    'attractions',
+    'promos',
+    'tickets',
+    'highlighted_call',
+    'purchasable',
+  ].join(',')
+  table = 'agenda'
+
+  static image(src) {
+    return src ? `https://chalacabar.com.br/img/agenda/${src}` : null
   }
-  scheduled() {
-    return this.get()
-      .then(parties => parties.filter(party => party.src3))
+
+  static format({
+    src,
+    src2,
+    src3,
+    purchasable,
+    nomenalista,
+    tempolista,
+    titulo,
+    descricao,
+    ...party
+  }) {
+    return {
+      ...party,
+      title: titulo,
+      description: descricao,
+      listTime: tempolista,
+      purchasable: !!purchasable,
+      hasList: !!nomenalista,
+      src: PartiesModel.image(src),
+      src2: PartiesModel.image(src2),
+      src3: PartiesModel.image(src3),
+    }
   }
-  find(slug) {
-    return this.get({ route: slug }).then(parse)
-  }
+
+  all = () =>
+    this.query(
+      `Select ${
+        PartiesModel.defaultSelect
+      } FROM agenda WHERE DATE(data) >= DATE(NOW()) ORDER BY data ASC LIMIT 20`
+    ).then(result => result.map(PartiesModel.format))
+
+  findBySlug = slug =>
+    this.querySingle(
+      `SELECT ${PartiesModel.defaultSelect} FROM ${
+        this.table
+      } WHERE href = ? LIMIT 1`,
+      slug
+    ).then(PartiesModel.format)
+
+  find = id =>
+    this.querySingle(
+      `SELECT ${PartiesModel.defaultSelect} FROM ${
+        this.table
+      } WHERE uid = ? LIMIT 1`,
+      id
+    )
 }
-
-
-const parse = party => ({
-  ...party,
-  src3: party.src3 ? party.src3 : 'https://chalacabar.com.br/img/agenda/default-src.jpeg',
-  src2: party.src2 ? party.src2 : 'https://chalacabar.com.br/img/agenda/default-src3.jpeg',
-  src: party.src ? party.src : 'https://chalacabar.com.br/img/agenda/default-src3.jpg',
-})

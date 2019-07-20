@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from 'react-google-maps'
 import styled from 'styled-components'
 import Side from 'helpers/Side'
-import PartiesModel from 'models/PartiesModel'
-import PhotosModel from 'models/PhotosModel'
+import PartiesRequests from 'requests/PartiesRequests'
+import PhotosRequests from 'requests/PhotosRequests'
 import A from 'components/common/A'
-import SponsorsModel from 'models/SponsorsModel'
+import SponsorsRequests from 'requests/SponsorsRequests'
 import HomeSectionParties from 'components/home-sections/parties/HomeSectionParties'
 import PageTitle from 'components/common/PageTitle'
 import MainView from 'components/views/MainView'
@@ -14,7 +14,7 @@ import PhotoNotification from 'components/common/PhotoNotification'
 
 class HomePage extends Component {
   static getInitialProps({ req }) {
-    return Promise.all([new PartiesModel(req).scheduled(), new PhotosModel(req).last(), new SponsorsModel(req).all()])
+    return Promise.all([new PartiesRequests(req).scheduled(), new PhotosRequests(req).last(), new SponsorsRequests(req).all()])
       .then(([parties, photos, sponsors]) => ({ parties, photos, sponsors }))
   }
 

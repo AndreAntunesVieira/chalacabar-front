@@ -1,4 +1,4 @@
-import PhotosModel from 'api/models/PhotosModel'
+import PhotosModel from 'models/PhotosModel'
 import { sendOk } from 'helpers/api/SendResponse'
 
 export default (req, res) => {

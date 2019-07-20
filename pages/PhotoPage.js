@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import PageTitle from 'components/common/PageTitle'
 import MainView from 'components/views/MainView'
-import PhotosModel from 'models/PhotosModel'
+import PhotosRequests from 'requests/PhotosRequests'
 import Button from 'components/common/Button'
 import PhotoAlbum from 'components/common/PhotoAlbum'
 import A from 'components/common/A'
@@ -12,7 +12,7 @@ export default class PhotoPage extends Component {
     const page = Number(query.pag || 1)
     const slug = query.album
     const photoSlug = query.photoSlug
-    return new PhotosModel(req).showAlbum(slug, page).then(album => {
+    return new PhotosRequests(req).showAlbum(slug, page).then(album => {
       const photo = album.photos.find(p => p.src === photoSlug)
       const index = album.photos.findIndex(p => p.src === photoSlug)
       const max = album.photos.length - 1
@@ -27,7 +27,7 @@ export default class PhotoPage extends Component {
     event.preventDefault()
     const minPage = this.state.maxPage - 1
     this.setState({ minPage })
-    new PhotosModel().all(minPage).then(loadedPhotos => {
+    new PhotosRequests().all(minPage).then(loadedPhotos => {
       const photos = [...loadedPhotos, ...this.state.photos]
       this.setState({ photos })
     })

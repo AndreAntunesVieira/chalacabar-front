@@ -1,5 +1,5 @@
-import PartySubscriptionsModel from 'api/models/PartySubscriptionsModel'
-import PromotersModel from 'api/models/PromotersModel'
+import PartySubscriptionsModel from 'models/PartySubscriptionsModel'
+import PromotersModel from 'models/PromotersModel'
 import { send500, sendUnprocessableEntity } from 'helpers/api/SendResponse'
 
 export default (req, res) => {

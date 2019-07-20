@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import PageTitle from 'components/common/PageTitle'
 import MainView from 'components/views/MainView'
-import PhotosModel from 'models/PhotosModel'
+import PhotosRequests from 'requests/PhotosRequests'
 import PhotoAlbum from 'components/common/PhotoAlbum'
 import Button from 'components/common/Button'
 import PhotoNotification from 'components/common/PhotoNotification'
@@ -10,7 +10,7 @@ import PhotoNotification from 'components/common/PhotoNotification'
 export default class AlbumsPage extends Component {
   static getInitialProps({ req, query }) {
     const page = Number(query.pag || 1)
-    return new PhotosModel(req).all(page).then(photos => ({ photos, page }))
+    return new PhotosRequests(req).all(page).then(photos => ({ photos, page }))
   }
 
   state = { ...this.props, maxPage: this.props.page, minPage: this.props.page, limit: 1000 }
@@ -20,7 +20,7 @@ export default class AlbumsPage extends Component {
     event.preventDefault()
     const minPage = this.state.maxPage - 1
     this.setState({ minPage })
-    new PhotosModel().all(minPage).then(loadedPhotos => {
+    new PhotosRequests().all(minPage).then(loadedPhotos => {
       const photos = [...loadedPhotos, ...this.state.photos]
       this.setState({ photos })
     })
@@ -31,7 +31,7 @@ export default class AlbumsPage extends Component {
     event.preventDefault()
     const maxPage = this.state.maxPage + 1
     this.setState({ maxPage })
-    new PhotosModel().all(maxPage).then(loadedPhotos => {
+    new PhotosRequests().all(maxPage).then(loadedPhotos => {
       const photos = [...this.state.photos, ...loadedPhotos]
       this.setState({ photos })
     })

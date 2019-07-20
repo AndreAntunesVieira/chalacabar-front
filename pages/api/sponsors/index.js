@@ -1,4 +1,4 @@
-import SponsorsModel from 'api/models/SponsorsModel'
+import SponsorsModel from 'models/SponsorsModel'
 import { sendOk } from 'helpers/api/SendResponse'
 
 export default (req, res) => {

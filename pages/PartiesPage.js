@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from 'react-google-maps'
 import styled from 'styled-components'
-import PartiesModel from 'models/PartiesModel'
+import PartiesRequests from 'requests/PartiesRequests'
 import PageTitle from 'components/common/PageTitle'
 import MainView from 'components/views/MainView'
 import PartySmall from 'components/common/PartySmall'
 
 class PartiesPage extends Component {
   static getInitialProps({ req }) {
-    return new PartiesModel(req).all().then(parties => ({ parties }))
+    return new PartiesRequests(req).all().then(parties => ({ parties }))
   }
 
   state = { ...this.props }

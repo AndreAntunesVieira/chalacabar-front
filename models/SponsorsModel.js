@@ -1,9 +1,7 @@
-import 'isomorphic-unfetch'
-import BaseModel from './_BaseModel'
+import BaseModel from '_BaseModel'
 
 export default class SponsorsModel extends BaseModel {
-  route = 'sponsors'
-  all(){
-    return this.get()
-  }
+  static defaultSelect = ['src', 'link', 'titulo'].join(',')
+
+  all = () => this.query('Select * from apoio WHERE active = ?', 1)
 }
