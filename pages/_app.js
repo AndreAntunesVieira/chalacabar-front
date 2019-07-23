@@ -5,7 +5,7 @@ import { setDocumentBodyWebFontsReady } from 'helpers/AsyncWebFonts.js'
 import { initializeGA } from 'helpers/GoogleAnalytics'
 import { initializeServiceWorker } from 'helpers/ServiceWorkerCaller'
 import { isClient, isServer } from 'helpers/Envirmonment'
-import { createStore, applyMiddleware } from 'redux'
+import { applyMiddleware, createStore } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import thunkMiddleware from 'redux-thunk'
 import reducers from 'store/reducers'
@@ -76,10 +76,6 @@ class MyApp extends App {
           <Component {...pageProps} />
         </Provider>
         <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" async defer />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Allerta+Stencil|Montserrat:300,400,500,600,700,800,900"
-        />
         <link
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"

@@ -1,7 +1,7 @@
 import delay from 'timeout-as-promise'
 
 export const setDocumentBodyWebFontsReady = timeout => {
-  return loadFonts(timeout, 'Roboto:400,700|Montserrat:400,700').then(() => {
+  return loadFonts(timeout, 'Allerta+Stencil:400,700', 'Montserrat:400,700').then(() => {
     document.querySelector('body').classList.add('fontsReady')
   })
 }

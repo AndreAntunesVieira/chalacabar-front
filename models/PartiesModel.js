@@ -10,6 +10,7 @@ export default class PartiesModel extends BaseModel {
     'descricao',
     'data as date',
     'href as slug',
+    'ticket_link',
     'status',
     'nomenalista',
     'tempolista',
@@ -34,11 +35,12 @@ export default class PartiesModel extends BaseModel {
     tempolista,
     titulo,
     descricao,
+    ticket_link,
     ...party
   }) {
     return {
       ...party,
-      ticketLink: 'abc',
+      ticketLink: ticket_link,
       title: titulo,
       description: descricao,
       listTime: tempolista,
