@@ -17,14 +17,14 @@ class MainView extends Component {
   render = () => (
     <div className={classNames('pt50', { ['sidebar-open']: this.state.open })}>
       <Header href="/" className="header-image">
-        <img src="/img/logo/logo-2019-white-transparent.png" alt="Logo Chalaça Bar" />
+        <img src="https://f002.backblazeb2.com/file/chalacabar/site/logo/logo-2019-white-transparent.png" alt="Logo Chalaça Bar" />
         <div className="header-hamburger" onClick={this.toggle}>
           <span />
         </div>
       </Header>
       {this.props.router.asPath !== '/' && this.props.router.asPath !== '/novo/' && (
         <GoBack href="/">
-          <img src="/img/icons/ArrowLeftSvg.svg" />{' '}
+          <img src="https://f002.backblazeb2.com/file/chalacabar/site/icons/ArrowLeftSvg.svg" />{' '}
         </GoBack>
       )}
       <Aside open={this.state.open}>
@@ -79,7 +79,7 @@ const GoBack = styled(A)`
   img {
     display: block;
     content: '';
-    background-image: url(/img/icons/ArrowLeftSvg.svg);
+    background-image: url(https://f002.backblazeb2.com/file/chalacabar/site/icons/ArrowLeftSvg.svg);
     background-repeat: no-repeat;
     background-size: contain;
     width: 20px;

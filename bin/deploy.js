@@ -20,7 +20,7 @@ exec('rm -rf .build/*')
   .then(packJson)
 
 function packJson () {
-  const pack = require('../package.json')
+  const pack = require('../package-production.json')
   delete (pack.devDependencies)
   delete (pack.scripts)
   pack.scripts = { postinstall: 'next build', start: 'node server' }

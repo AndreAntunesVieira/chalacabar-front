@@ -18,7 +18,7 @@ export default class PartiesRequests extends Requests {
 
 const parse = party => ({
   ...party,
-  src3: party.src3 ? party.src3 : 'https://chalacabar.com.br/img/agenda/default-src.jpeg',
-  src2: party.src2 ? party.src2 : 'https://chalacabar.com.br/img/agenda/default-src3.jpeg',
-  src: party.src ? party.src : 'https://chalacabar.com.br/img/agenda/default-src3.jpg',
+  src3: party.src3 ? party.src3 : 'https://f002.backblazeb2.com/file/chalacabar/agenda/default-src.jpeg',
+  src2: party.src2 ? party.src2 : 'https://f002.backblazeb2.com/file/chalacabar/agenda/default-src3.jpeg',
+  src: party.src ? party.src : 'https://f002.backblazeb2.com/file/chalacabar/agenda/default-src3.jpg',
 })

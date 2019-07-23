@@ -84,8 +84,8 @@ class Slug extends Component {
 
       {this.props.ticketLink && (
         <section className="ph8" id="comprar">
-          <h1>Compre agora seu ingresso agora mesmo!</h1>
-          <Button large success href={this.props.ticketLink}>Ver opções de compra</Button>
+          <h1>Compre seu ingresso agora mesmo!</h1>
+          <Button target="_blank" large success href={this.props.ticketLink}>Ver opções de compra</Button>
         </section>
       )}
       <section className="ph8" id="descricao">

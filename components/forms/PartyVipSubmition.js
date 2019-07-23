@@ -98,7 +98,7 @@ class PartyVipSubmition extends Component {
         Entenda como funciona a <A href="/reservas#entenda">reserva de camarotes clicando aqui</A>
       </div>
       <ImageContainer>
-        <img src="/img/layout/camarotes-vagos.jpg" />
+        <img src="https://f002.backblazeb2.com/file/chalacabar/site/camarotes-vagos.jpg" />
         {this.state.markers.map(({value, ...mark}) => (
           <Marker {...mark} key={mark.id} onClick={() => this.selectTable(value)} />
         ))}

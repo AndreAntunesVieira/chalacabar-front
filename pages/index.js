@@ -14,14 +14,14 @@ import PhotoNotification from 'components/common/PhotoNotification'
 
 class Index extends Component {
   static getInitialProps({ req }) {
-    return Promise.all([new PartiesRequests(req).scheduled(), new PhotosRequests(req).last(), new SponsorsRequests(req).all()])
-      .then(([parties, photos, sponsors]) => ({ parties, photos, sponsors }))
+      return Promise.all([new PartiesRequests(req).scheduled(), new PhotosRequests(req).last(), new SponsorsRequests(req).all()])
+        .then(([parties, photos, sponsors]) => ({ parties, photos, sponsors }))
   }
 
   state = { ...this.props }
 
   componentWillMount() {
-    const parties = this.state.parties
+    const parties = this.state.parties || []
     if (parties[0]) parties[0].active = true
     this.setState({ parties })
     if (Side.client) {
@@ -41,7 +41,7 @@ class Index extends Component {
     <MainView>
       <PageTitle>Chalaça Bar Ipanema</PageTitle>
       <HomeSectionParties parties={this.state.parties} sufix="descricao" />
-      <HomeMainDivider className="home-section" hasPhotos={this.state.photos.length > 0}>
+      <HomeMainDivider className="home-section" hasPhotos={this.state.photos?.length > 0}>
         <div>
           <section id="reservas-e-aniversarios">
             <div>
@@ -66,7 +66,7 @@ class Index extends Component {
           </section>
         </div>
 
-        {this.state.photos.length > 0 && (
+        {this.state.photos?.length > 0 && (
           <section id="fotos">
             <h2>Últimas Fotos</h2>
             <div className="photos-container">

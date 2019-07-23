@@ -3,6 +3,14 @@ import mysql from 'mysql'
 let connected = false
 let connection
 
+const dbConfig = {
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  database: process.env.DB_NAME,
+}
+if(process.env.DB_PORT) dbConfig.port = process.env.DB_PORT
+
 export default class BaseModel {
   constructor() {}
 
@@ -10,12 +18,7 @@ export default class BaseModel {
     if (connected) return Promise.resolve(connection)
     if (connection) return this._waitConnection()
     return new Promise((resolve, reject) => {
-      connection = mysql.createConnection({
-        host: process.env.DB_HOST,
-        user: process.env.DB_USER,
-        password: process.env.DB_PASS,
-        database: process.env.DB_NAME,
-      })
+      connection = mysql.createConnection(dbConfig)
       connection.connect(err => (err ? reject(err) : resolve(connection)))
       connected = true
     })

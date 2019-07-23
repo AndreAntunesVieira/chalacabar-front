@@ -2,7 +2,7 @@ import querystring from 'querystring'
 import Side from 'helpers/Side'
 
 export default class BaseRequests {
-  baseUrl = process.env.API || 'http://m-chalacabar-com-br.umbler.net/api'
+  baseUrl = process.env.API || 'http://chalacabar-com-br.umbler.net/api'
   route = ''
 
   constructor(req = {}, options = {}) {
