@@ -23,7 +23,7 @@ export default class PartiesModel extends BaseModel {
   table = 'agenda'
 
   static image(src) {
-    return src ? `https://f002.backblazeb2.com/file/chalacabar/agenda/${src}` : null
+    return src ? `https://img.chalacabar.com.br/agenda/${src}` : null
   }
 
   static format({

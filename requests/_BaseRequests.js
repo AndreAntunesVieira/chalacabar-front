@@ -2,11 +2,10 @@ import querystring from 'querystring'
 import Side from 'helpers/Side'
 
 export default class BaseRequests {
-  baseUrl = 'https://chalacabar.com.br/api'
+  baseUrl = 'http://chalacabar.com.br/api'
   route = ''
 
   constructor(req = {}, options = {}) {
-    console.log('has api?', process.env.API)
     this.req = req
     this.defaultOptions = options
   }
