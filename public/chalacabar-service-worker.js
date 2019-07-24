@@ -4,7 +4,6 @@ self.addEventListener('install', function(e) {
   fetch('https://chalacabar.com.br/api/install', { method: 'POST' })
   e.waitUntil(
     caches.open(cacheName).then(cache => {
-      cache.add(new Request('/', { redirect: 'follow' }))
       cache.addAll(filesToCache)
     })
   )
