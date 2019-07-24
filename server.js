@@ -19,6 +19,7 @@ function openServer() {
     .use(cors())
     .use(enforceSSL)
     .use('/novo', redirect)
+    .get('/.ack', ack)
     .use(handler)
     .listen(PORT, () => process.stdout.write(`Server Ready on port:${PORT}\n`))
 }
@@ -28,6 +29,10 @@ function redirect (req, res) {
 }
 
 function enforceSSL(req, res, next){
-  if (req.headers['x-forwarded-proto'] === 'https') return next()
+  if (process.env.ENFORCE_SSL !== 'true' || req.headers['x-forwarded-proto'] === 'https') return next()
   return res.redirect("https://" + req.headers.host + req.url)
+}
+
+function ack(req, res){
+  return res.json({ok: true})
 }
