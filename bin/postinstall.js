@@ -1,13 +1,14 @@
 const spawn = require('child_process').spawn
 const fs = require('fs')
 
-console.log('NODE_ENV: ', process.env.NODE_ENV)
+console.log('NODE_ENV: (com _)', process.env.NODE_ENV)
+console.log('NODEENV (sem _): ', process.env.NODEENV)
 let env = fs.readFileSync('.env.sample', 'utf8').split('\n')
 env = env.filter(row => row).map(row => {
   const [name] = row.split('=')
   return `${name}=${process.env[name]}`
 })
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODEENV === 'production') {
   fs.writeFileSync('.env', env.join('\n'))
   console.log('generated file .env:\n\n', env.join('\n'))
 
