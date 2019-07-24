@@ -1,4 +1,4 @@
-const cacheName = 'chalacabar'
+const cacheName = 'chalaca'
 const filesToCache = ['/css/style.css', '/img/logo/logo-2019-white-transparent.png']
 self.addEventListener('install', function(e) {
   fetch('https://chalacabar.com.br/api/install', { method: 'POST' })
