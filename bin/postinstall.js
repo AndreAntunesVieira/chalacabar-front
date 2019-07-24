@@ -8,6 +8,7 @@ if (process.env.NODE_ENV === 'production') {
     return `${name}=${process.env[name]}`
   })
   fs.writeFileSync('.env', env.join('\n'))
+  console.log('generated file .env:\n\n', env.join('\n'))
 
   const ls = spawn('npm', ['run', 'build'])
   ls.stdout.on('data', data => {
