@@ -3,13 +3,7 @@ const fs = require('fs')
 
 console.log('all: ', process.env)
 if (process.env.HOME === '/root') {
-  let env = fs.readFileSync('.env.sample', 'utf8').split('\n')
-  env = env.filter(row => row).map(row => {
-    const [name] = row.split('=')
-    return `${name}=${process.env[name]}`
-  })
-  fs.writeFileSync('.env', env.join('\n'))
-  console.log('generated file .env:\n\n', env.join('\n'))
+  fs.unlinkSync('.env')
 
   const ls = spawn('npm', ['run', 'build'])
   ls.stdout.on('data', data => {
