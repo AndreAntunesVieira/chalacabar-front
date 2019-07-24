@@ -17,6 +17,7 @@ function openServer() {
     .use(express.static('public'))
     .use(bodyParser.json())
     .use(cors())
+    .use(enforceSSL)
     .use('/novo', redirect)
     .use(handler)
     .listen(PORT, () => process.stdout.write(`Server Ready on port:${PORT}\n`))
@@ -24,4 +25,9 @@ function openServer() {
 
 function redirect (req, res) {
   return res.redirect(302, req.url)
+}
+
+function enforceSSL(req, res, next){
+  if (req.headers['x-forwarded-proto'] === 'https') return next()
+  return res.redirect("https://" + req.headers.host + req.url)
 }
