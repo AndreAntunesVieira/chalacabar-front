@@ -29,13 +29,14 @@ function redirect (req, res) {
   return res.redirect(302, req.url)
 }
 
-function enforceSSL(req, res, next){
+function enforceSSL (req, res, next) {
+  if (req.headers.host === 'www.chalacabar.com.br') return res.redirect('https://chalacabar.com.br' + req.url)
   if (process.env.ENFORCE_SSL !== 'true' || req.headers['x-forwarded-proto'] === 'https') return next()
-  return res.redirect("https://" + req.headers.host + req.url)
+  return res.redirect('https://' + req.headers.host + req.url)
 }
 
-function ack(req, res){
-  return res.json({ok: true})
+function ack (req, res) {
+  return res.json({ ok: true })
 }
 
 function compress(req, res, next) {

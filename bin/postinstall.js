@@ -1,12 +1,13 @@
-const spawn = require('child_process').spawn
+const { spawn, exec } = require('child_process')
 
 if (process.env.HOME === '/root') {
-  const ls = spawn('npm', ['run', 'build'])
-  ls.stdout.on('data', data => {
-    process.stdout.write(data.toString('utf8')
-      .replace(/(┌ σ|├ σ|├  |└ σ) /g, '')
-      .replace(/^Page    /, 'Page')
-      .replace(/σ  \(.*\n/, '')
-      .replace(/⚡  \(.*\n/, ''))
+  exec('export NODE_ENV=production && npm run build', (e, data) => {
+    process.stdout.write(
+      data
+        .replace(/(┌ σ|├ σ|├  |└ σ) /g, '')
+        .replace(/^Page    /, 'Page')
+        .replace(/σ  \(.*\n/, '')
+        .replace(/⚡  \(.*\n/, ''),
+    )
   })
 }
