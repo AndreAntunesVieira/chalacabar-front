@@ -7,7 +7,7 @@
     "dev": "node server",
     "stop": "forever stopall",
     "build": "next build",
-    "postinstall": "node ./bin/postinstall.js",
+    "postinstall": "NODE_ENV=production npm run build",
     "deploy": "cp package-production.json package.json",
     "css": "sass styles/style.scss public/css/style.css",
     "css:watch": "sass --watch styles/style.scss public/css/style.css"
