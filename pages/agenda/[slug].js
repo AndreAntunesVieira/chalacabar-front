@@ -6,13 +6,14 @@ import PartiesRequests from '../../requests/PartiesRequests'
 import Side from '../../helpers/Side'
 import MainView from '../../components/views/MainView'
 import HomeSectionPartiesImage from '../../components/home-sections/parties/HomeSectionPartiesImage'
-import Button from '../../components/common/Button'
 import ListName from '../../components/forms/ListName'
 import DangerousHTML from '../../components/common/DangerousHTML'
 import PageTitle from '../../components/common/PageTitle'
 import PartySubscriptionsRequests from '../../requests/PartySubscriptionsRequests'
 import { showNotification } from '../../store/NotificationStore'
 import PartyVipSubmition from '../../components/forms/PartyVipSubmition'
+
+const s1Style = { marginTop: 64 }
 
 class Slug extends Component {
   static getInitialProps({ req, query }) {
@@ -81,14 +82,7 @@ class Slug extends Component {
     <MainView>
       <PageTitle>{this.props.title} | Chalaça Bar Ipanema</PageTitle>
       <HomeSectionPartiesImage {...this.props} hasList={false} purchasable={false} />
-
-      {this.props.ticketLink && (
-        <section className="ph8" id="comprar">
-          <h1>Compre seu ingresso agora mesmo!</h1>
-          <Button target="_blank" large success href={this.props.ticketLink}>Ver opções de compra</Button>
-        </section>
-      )}
-      <section className="ph8" id="descricao">
+      <section className="ph8" style={s1Style} id="descricao">
         <h1>{this.props.title}</h1>
         <Description {...this.props} />
       </section>
@@ -126,58 +120,6 @@ function Description({ description, attractions, promos, tickets, label = '', bu
     </>
   )
 }
-
-const Tickets = styled.div`
-  margin: 8px 4px 0 4px;
-  padding: 8px;
-  border-radius: 4px;
-  background-color: #f5f5f5;
-  h4 {
-    margin: 0;
-  }
-  h6 {
-    font-size: 11px;
-    font-weight: normal;
-    margin: 0;
-  }
-  .sex-column {
-    width: 80px;
-  }
-  .num-column {
-    width: 30px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    button {
-      background-color: transparent;
-      border: 1px solid #ddd;
-      &:first-child {
-        border-radius: 4px 4px 0 0;
-      }
-      &:last-child {
-        border-radius: 0 0 4px 4px;
-      }
-    }
-  }
-  > div:first-child {
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 4px;
-    margin-bottom: 8px;
-  }
-`
-const TicketTotal = styled.div`
-  margin: 0 4px 8px 4px;
-  border-radius: 0 0 4px 4px;
-  padding: 8px 0;
-  b {
-    margin-right: 5px;
-  }
-  button {
-    //color: #555;
-  }
-`
 
 const DescriptionContainer = styled.div`
   h2 {

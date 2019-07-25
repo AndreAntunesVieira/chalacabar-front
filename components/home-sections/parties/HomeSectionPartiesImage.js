@@ -17,7 +17,7 @@ const HomeSectionPartiesImage = ({ slug, src3, src2, userAgent, active, title, t
         </Button>
       )}
       {ticketLink && (
-        <Button success full className="mv4" href={ticketLink} target="_blank">
+        <Button large success full className="mv4" href={ticketLink} target="_blank">
           Comprar ingresso
         </Button>
       )}
