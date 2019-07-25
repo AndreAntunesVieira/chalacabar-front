@@ -6,7 +6,7 @@ const cors = require('cors')
 const bodyParser = require('body-parser')
 
 const PORT = process.env.PORT || '3002'
-const dev = process.env.NODE_ENV !== 'production'
+const dev = process.env.NODE_ENV === 'development'
 const app = next({ dev })
 const handler = app.getRequestHandler()
 
@@ -30,7 +30,7 @@ function redirect (req, res) {
 }
 
 function enforceSSL (req, res, next) {
-  if (req.headers.host === 'www.chalacabar.com.br') return res.redirect('https://chalacabar.com.br' + req.url)
+  // if (req.headers.host === 'www.chalacabar.com.br') return res.redirect('https://chalacabar.com.br' + req.url)
   if (process.env.ENFORCE_SSL !== 'true' || req.headers['x-forwarded-proto'] === 'https') return next()
   return res.redirect('https://' + req.headers.host + req.url)
 }
