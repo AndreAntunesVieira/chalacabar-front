@@ -3,8 +3,9 @@
   "version": "2.0.0",
   "main": "main.js",
   "scripts": {
-    "start": "forever start server.js",
+    "start": "forever start server.js && forever logs 0 -f",
     "dev": "node server",
+    "stop": "forever stopall",
     "build": "next build",
     "postinstall": "node ./bin/postinstall.js",
     "deploy": "cp package-production.json package.json",
