@@ -5,6 +5,7 @@ self.addEventListener('install', function(e) {
   fetch('https://chalacabar.com.br/.act/install')
   e.waitUntil(
     caches.open(cacheName).then(cache => {
+      cache.delete('/')
       cache.add(new Request('/', { redirect: 'follow' }))
       cache.addAll(filesToCache)
     })
@@ -21,6 +22,20 @@ self.addEventListener('activate', event => {
 })
 
 self.addEventListener('fetch', event => {
+  if(event.request.url === '/'){
+    return event.respondWith(
+      caches.open(cacheName)
+        .then(cache => {
+          try{
+            cache.delete('/')
+          }
+          catch(e){
+
+          }
+          return fetch(event.request)
+        })
+    )
+  }
   event.respondWith(
     caches.match(event.request, { ignoreSearch: true }).then(response => response || fetch(event.request))
   )
