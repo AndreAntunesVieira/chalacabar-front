@@ -18,6 +18,7 @@ function openServer() {
     .use(bodyParser.json())
     .use(cors())
     .use(enforceSSL)
+    .use(compress)
     .use('/novo', redirect)
     .get('/.ack', ack)
     .use(handler)
@@ -35,4 +36,10 @@ function enforceSSL(req, res, next){
 
 function ack(req, res){
   return res.json({ok: true})
+}
+
+function compress(req, res, next) {
+  if (dev) return next()
+  const compression = require('compression')
+  return compression()(req, res, next)
 }
