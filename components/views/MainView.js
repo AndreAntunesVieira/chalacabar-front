@@ -115,10 +115,13 @@ const Aside = styled.aside`
     font-weight: normal;
     text-decoration: none;
     transition: ease all 150ms;
-    font-family: 'Montserrat', sans-serif;
+    font-family: Arial, sans-serif;
     font-size: 13px;
     letter-spacing: .9px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    .fontsReady & {
+      font-family: 'Allerta Stencil', sans-serif;
+    }
     &:hover {
       background-color: rgba(255, 255, 255, 0.5);
       color: black;
@@ -129,6 +132,7 @@ const Aside = styled.aside`
     @media (min-width: 1200px){
       border-bottom: 1px solid #1C1C1D;
       padding: 8px 16px;
+      transition: all ease 500ms;
       &:hover {
         background: none;
         color: rgba(255, 255, 255, 0.8);

@@ -11,6 +11,7 @@ import thunkMiddleware from 'redux-thunk'
 import reducers from 'store/reducers'
 import { setDeviceInfos } from 'store/AppStore'
 import Head from 'next/head'
+import { loadAsyncCss } from 'helpers/AsyncHtmlLoader'
 
 const initializeStore = initialState =>
   createStore(reducers, initialState, composeWithDevTools(applyMiddleware(thunkMiddleware)))
@@ -52,7 +53,10 @@ class MyApp extends App {
       initializeServiceWorker()
     }
   }
-  componentDidMount = () => setDocumentBodyWebFontsReady(100)
+  componentDidMount = () => {
+    setDocumentBodyWebFontsReady(100)
+    loadAsyncCss('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css')
+  }
 
   render = () => {
     const { Component, pageProps, store } = this.props
@@ -76,10 +80,6 @@ class MyApp extends App {
           <Component {...pageProps} />
         </Provider>
         <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" async defer />
-        <link
-          rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-        />
       </Container>
     )
   }

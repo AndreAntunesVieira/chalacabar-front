@@ -130,7 +130,7 @@ const Container = styled.section`
     height: calc(140vw + 68px);
     overflow: hidden;
     @media (min-width: 1012px) {
-      height: 500px;
+      height: 520px;
     }
   }
 
@@ -138,7 +138,7 @@ const Container = styled.section`
     height: calc(140vw + 62px);
     display: flex;
     @media (min-width: 1012px) {
-      height: 500px;
+      height: 520px;
     }
   }
 
@@ -150,7 +150,7 @@ const Container = styled.section`
     overflow: hidden;
     height: calc(140vw + 92px);
     @media (min-width: 1012px) {
-      height: 500px;
+      height: 520px;
       min-width: 1012px;
     }
   }

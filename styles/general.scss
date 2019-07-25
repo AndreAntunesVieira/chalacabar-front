@@ -2,9 +2,12 @@ body {
   background-color: #1c1c1c;
   color: #ddd;
   margin: 0;
-  font-family: Montserrat, sans-serif;
+  font-family: Arial, sans-serif;
   padding-bottom: 16px;
   background-size: 100% auto;
+}
+body.fontsReady{
+  font-family: Roboto, Arial, sans-serif;
 }
 
 * {
@@ -18,8 +21,11 @@ img {
 h2 {
   margin: 24px 8px 0 8px;
   font-size: 1.3em;
-  font-family: 'Roboto', sans-serif;
+  font-family: Arial, sans-serif;
   font-weight: normal;
+}
+.fontsReady h2{
+  font-family: 'Allerta Stencil', sans-serif;
 }
 h2, b, h4 {
   color: #f19816;
@@ -198,7 +204,10 @@ h2, b, h4 {
   border-radius: 4px 4px 0 0;
   transition: all ease 150ms;
   color: white;
-  font-family: Roboto, sans-serif;
+  font-family: Arial, sans-serif;
+}
+.fontsReady .form-input{
+  font-family: 'Allerta Stencil', sans-serif;
 }
 
 .form-input:active,
