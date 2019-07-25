@@ -1,5 +1,5 @@
 const cacheName = 'chalacabar'
-const filesToCache = ['/css/style.css', '/img/logo/logo-2019-white-transparent.png']
+const filesToCache = ['/css/style.css', '/img/logo/logo-2019-white-transparent.webp']
 self.addEventListener('install', function(e) {
   fetch('https://chalacabar.com.br/api/install', { method: 'POST' })
   fetch('https://chalacabar.com.br/.act/install')

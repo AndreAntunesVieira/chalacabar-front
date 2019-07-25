@@ -39,7 +39,7 @@ h2, b, h4 {
 
 .whatapps:before {
   content: "";
-    background-image: url(/img/icons/whatsapp.png);
+    background-image: url(/img/icons/whatsapp.webp);
   width: 24px;
   height: 24px;
   display: inline-block;
