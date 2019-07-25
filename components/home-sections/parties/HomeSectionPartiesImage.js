@@ -5,10 +5,10 @@ import A from 'components/common/A'
 import Button from 'components/common/Button'
 import ResponsiveImage from 'components/common/ResponseiveImage'
 
-const HomeSectionPartiesImage = ({ slug, src3, src2, userAgent, active, title, purchasable, hasList, sufix }) => (
+const HomeSectionPartiesImage = ({ slug, src3, src2, userAgent, active, title, ticketLink, hasList, sufix, autoload }) => (
   <Container active={active}>
     <A href={`/agenda/${slug}${sufix ? `#${sufix}` : ''}`}>
-      <ResponsiveImage mobile={src3} desk={src2} alt={title} />
+      <ResponsiveImage mobile={src3} desk={src2} alt={title} autoload={autoload} />
     </A>
     <div className="party-actions ph8">
       {hasList && (
@@ -16,9 +16,9 @@ const HomeSectionPartiesImage = ({ slug, src3, src2, userAgent, active, title, p
           Colocar nome na lista
         </Button>
       )}
-      {purchasable && (
-        <Button success full className="mv4" href={`/agenda/${slug}#comprar`}>
-          Comprar ingresso antecipado
+      {ticketLink && (
+        <Button success full className="mv4" href={ticketLink} target="_blank">
+          Comprar ingresso
         </Button>
       )}
     </div>

@@ -19,7 +19,7 @@
     }
   ],
   "start_url": "/novo",
-  "display": "browser",
+  "display": "fullscreen",
   "orientation": "any",
   "background_color": "#FFC501",
   "theme_color": "#F6F5F5"

@@ -99,13 +99,17 @@ export default class HomeSectionParties extends Component {
     return style
   }
 
+  autoload = key => {
+    return this.state.active === key || this.state.active === key + 1
+  }
+
   render = () => (
     <Container>
       <div className="parties" onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
         <div className="parties-mask" ref={this.slider}>
           <div className="parties-slider" style={this.style}>
             {this.props.parties.map((party, key) => (
-              <HomeSectionPartiesImage {...party} key={key} sufix="descricao" />
+              <HomeSectionPartiesImage {...party} key={key} sufix="descricao" autoload={this.autoload(key)} />
             ))}
           </div>
         </div>

@@ -17,7 +17,7 @@ class MainView extends Component {
   render = () => (
     <div className={classNames('pt50', { ['sidebar-open']: this.state.open })}>
       <Header href="/" className="header-image">
-        <img src="/img/logo/logo-2019-white-transparent.png" alt="Logo Chalaça Bar" />
+        <img src="/img/logo/logo-2019-white-transparent.png" height="38" alt="Logo Chalaça Bar" />
         <div className="header-hamburger" onClick={this.toggle}>
           <span />
         </div>
