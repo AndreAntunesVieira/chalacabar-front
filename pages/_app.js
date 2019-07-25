@@ -11,7 +11,7 @@ import thunkMiddleware from 'redux-thunk'
 import reducers from 'store/reducers'
 import { setDeviceInfos } from 'store/AppStore'
 import Head from 'next/head'
-import { loadAsyncCss } from 'helpers/AsyncHtmlLoader'
+import { loadAsyncJs } from 'helpers/AsyncHtmlLoader'
 
 const initializeStore = initialState =>
   createStore(reducers, initialState, composeWithDevTools(applyMiddleware(thunkMiddleware)))
@@ -55,7 +55,8 @@ class MyApp extends App {
   }
   componentDidMount = () => {
     setDocumentBodyWebFontsReady(100)
-    loadAsyncCss('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css')
+    loadAsyncJs('https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js')
+    loadAsyncJs('https://www.googletagmanager.com/gtag/js?id=UA-60724303-7')
   }
 
   render = () => {
@@ -72,14 +73,12 @@ class MyApp extends App {
           <link rel="shortcut icon" type="image/x-icon" href="/img/icons/favicon.ico" />
           <link rel="apple-touch-icon" href="/img/icons/favicon-apple.png" />
           <meta content="/img/layout/favicon-ms.png" name="msapplication-TileImage" />
-
           <link href="/css/style.css" rel="stylesheet" type="text/css" />
-          <script async src="https://www.googletagmanager.com/gtag/js?id=UA-60724303-7" />
+          <script async src="" />
         </Head>
         <Provider store={store}>
           <Component {...pageProps} />
         </Provider>
-        <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" async defer />
       </Container>
     )
   }

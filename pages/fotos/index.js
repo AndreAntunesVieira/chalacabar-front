@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import PageTitle from '../../components/common/PageTitle'
-import MainView from '../../components/views/MainView'
-import PhotosRequests from '../../requests/PhotosRequests'
-import PhotoAlbum from '../../components/common/PhotoAlbum'
-import Button from '../../components/common/Button'
-import PhotoNotification from '../../components/common/PhotoNotification'
+import PageTitle from 'components/common/PageTitle'
+import MainView from 'components/views/MainView'
+import PhotosRequests from 'requests/PhotosRequests'
+import PhotoAlbum from 'components/common/PhotoAlbum'
+import Button from 'components/common/Button'
+import PhotoNotification from 'components/common/PhotoNotification'
 
 export default class Index extends Component {
   static getInitialProps({ req, query }) {

@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
-import PageTitle from '../../components/common/PageTitle'
-import MainView from '../../components/views/MainView'
-import Button from '../../components/common/Button'
-import BirthDateForm from '../../components/forms/BirthDateForm'
-import BirthDatesModel from '../../requests/BirthDateRequests'
-import { showNotification } from '../../store/NotificationStore'
-import TextsRequests from '../../requests/TextsRequests'
+import PageTitle from 'components/common/PageTitle'
+import MainView from 'components/views/MainView'
+import Button from 'components/common/Button'
+import BirthDateForm from 'components/forms/BirthDateForm'
+import BirthDatesModel from 'requests/BirthDateRequests'
+import { showNotification } from 'store/NotificationStore'
+import TextsRequests from 'requests/TextsRequests'
 
 class BirthDatePage extends Component {
   static getInitialProps() {

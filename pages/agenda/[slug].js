@@ -2,16 +2,16 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import delay from 'timeout-as-promise'
 import styled from 'styled-components'
-import PartiesRequests from '../../requests/PartiesRequests'
-import Side from '../../helpers/Side'
-import MainView from '../../components/views/MainView'
-import HomeSectionPartiesImage from '../../components/home-sections/parties/HomeSectionPartiesImage'
-import ListName from '../../components/forms/ListName'
-import DangerousHTML from '../../components/common/DangerousHTML'
-import PageTitle from '../../components/common/PageTitle'
-import PartySubscriptionsRequests from '../../requests/PartySubscriptionsRequests'
-import { showNotification } from '../../store/NotificationStore'
-import PartyVipSubmition from '../../components/forms/PartyVipSubmition'
+import PartiesRequests from 'requests/PartiesRequests'
+import Side from 'helpers/Side'
+import MainView from 'components/views/MainView'
+import HomeSectionPartiesImage from 'components/home-sections/parties/HomeSectionPartiesImage'
+import ListName from 'components/forms/ListName'
+import DangerousHTML from 'components/common/DangerousHTML'
+import PageTitle from 'components/common/PageTitle'
+import PartySubscriptionsRequests from 'requests/PartySubscriptionsRequests'
+import { showNotification } from 'store/NotificationStore'
+import PartyVipSubmition from 'components/forms/PartyVipSubmition'
 
 const s1Style = { marginTop: 64 }
 
@@ -67,15 +67,6 @@ class Slug extends Component {
       .catch(e => {
         this.props.showNotification({ text: e.data.error.toString(), color: 'danger' })
       })
-  }
-
-  update = () => {
-    return delay(10).then(() => {
-      const male = this.state.malePrice + this.state.maleTax
-      const female = this.state.femalePrice + this.state.femaleTax
-      const total = male * this.state.male + female * this.state.female
-      this.setState({ total })
-    })
   }
 
   render = () => (

@@ -7,10 +7,13 @@ export const setDocumentBodyWebFontsReady = timeout => {
 const loadFonts = (timeout, ...families) => {
   if (typeof WebFont === 'undefined')
     return delay(timeout).then(() => loadFonts(timeout, ...families))
-  console.log('h1')
-  return new Promise(active => WebFont.load({ google: { families }, active: () => {
-      console.log('h2')
-      document.querySelector('body').classList.add('fontsReady')
-      active()
-    } }))
+  return new Promise(active =>
+    WebFont.load({
+      google: { families },
+      active: () => {
+        document.querySelector('body').classList.add('fontsReady')
+        active()
+      },
+    })
+  )
 }
