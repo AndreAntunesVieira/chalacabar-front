@@ -1,12 +1,14 @@
 import BirthDatesModel from 'models/BirthDatesModel'
 import { sendCreated, sendNotFound, sendUnprocessableEntity } from 'helpers/api/SendResponse'
+import { requestJson } from 'helpers/RequestHelpers'
 
 export default (req, res) => {
   if (req.method !== 'POST') return sendNotFound(res)()
 
-  const invalidMessage = validateCreate(req.query)
+  const query = requestJson(req)
+  const invalidMessage = validateCreate(query)
   if (invalidMessage) return sendUnprocessableEntity(res, invalidMessage)
-  return new BirthDatesModel().create(req.body).then(sendCreated(res))
+  return new BirthDatesModel().create(query).then(sendCreated(res))
 }
 
 const validateCreate = query => {
