@@ -6,7 +6,7 @@ export default (req, res) => {
   return new VipModel()
     .isFree(partyId, tableNumber)
     .then(() => new VipModel().create(req.query))
-    .then(sendCreated(res)
+    .then(sendCreated(res))
     .catch(e => {
       if (e === false) return sendUnprocessableEntity(res, 'Desculpe, alguém acabou de reservar esta mesa :(')
     })
