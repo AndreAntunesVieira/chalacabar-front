@@ -6,7 +6,7 @@ export default (req, res) => {
 
   const invalidMessage = validateCreate(req.query)
   if (invalidMessage) return sendUnprocessableEntity(res, invalidMessage)
-  return new BirthDatesModel().create(req.body).then(() => sendCreated(res))
+  return new BirthDatesModel().create(req.body).then(sendCreated(res))
 }
 
 const validateCreate = query => {

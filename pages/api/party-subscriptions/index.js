@@ -1,6 +1,6 @@
 import PartySubscriptionsModel from 'models/PartySubscriptionsModel'
 import PromotersModel from 'models/PromotersModel'
-import { send500, sendOk, sendUnprocessableEntity } from 'helpers/api/SendResponse'
+import { send500, sendCreated, sendUnprocessableEntity } from 'helpers/api/SendResponse'
 import { requestJson } from 'helpers/RequestHelpers'
 
 export default (req, res) => {
@@ -27,7 +27,7 @@ export default (req, res) => {
       const data = friends.map(name => ({ partyId, name, invitedBy: null, promoterId }))
       return new PartySubscriptionsModel().inviteBatch(data)
     })
-    .then(sendOk(res))
+    .then(sendCreated(res))
     .catch(e => {
       if (e === 'promoter_not_found') return sendUnprocessableEntity(res, 'Promoter não encontrado ou senha inválida')
       return send500(res, e)

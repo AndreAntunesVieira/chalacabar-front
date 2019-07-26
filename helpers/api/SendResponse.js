@@ -3,12 +3,12 @@ export const sendNotFound = res => content => {
   return res.end(content)
 }
 
-export const sendOk = (res) => content => {
+export const sendOk = res => content => {
   res.status(200)
   return res.json(content)
 }
 
-export const sendCreated = (res, content) => {
+export const sendCreated = res => content => {
   res.status(201)
   if(!content) return res.end()
   return res.json(content)
