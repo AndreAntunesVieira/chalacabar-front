@@ -1,12 +1,14 @@
 import PartySubscriptionsModel from 'models/PartySubscriptionsModel'
 import PromotersModel from 'models/PromotersModel'
 import { send500, sendUnprocessableEntity } from 'helpers/api/SendResponse'
+import { requestJson } from 'helpers/RequestHelpers'
 
 export default (req, res) => {
-  let { phone, name, partyId, friends } = req.query
-  const invalidMessage = validateCreate(req.query)
+  const query = requestJson(req)
+  let { phone, name, partyId, friends } = query
+  const invalidMessage = validateCreate(query)
   if (invalidMessage) return sendUnprocessableEntity(res, invalidMessage)
-  return validatePromoter(req.query)
+  return validatePromoter(query)
     .then(promoter => {
       const names = promoter ? [] : [{ name, phone, main: true }]
       if (friends) {
