@@ -11,6 +11,7 @@ import PageTitle from 'components/common/PageTitle'
 import MainView from 'components/views/MainView'
 import PhotoAlbum from 'components/common/PhotoAlbum'
 import PhotoNotification from 'components/common/PhotoNotification'
+import Map from 'components/common/Map'
 
 class Index extends Component {
   static getInitialProps({ req }) {
@@ -82,25 +83,12 @@ class Index extends Component {
         )}
       </HomeMainDivider>
 
-      <MyMapComponent
-        isMarkerShown
-        googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCuYTRIwyZET7YSyeiHiqCOSNTVNRYd35Q&v=3.exp&libraries=geometry,drawing,places"
-        loadingElement={<div style={{ height: `100%` }} />}
-        containerElement={<div style={{ height: `400px` }} />}
-        mapElement={<div style={{ height: `100%` }} />}
-      />
+      <Map />
       <Address>Praça Sen. Alberto Pasqualini, 240 - Ipanema, Porto Alegre - RS, 91760-051</Address>
     </MainView>
   )
 }
 
-const MyMapComponent = withScriptjs(
-  withGoogleMap(() => (
-    <GoogleMap defaultZoom={14} defaultCenter={{ lat: -30.1332125, lng: -51.2309347 }}>
-      <Marker position={{ lat: -30.1332125, lng: -51.2309347 }} />
-    </GoogleMap>
-  ))
-)
 export default Index
 
 const Address = styled.div`
