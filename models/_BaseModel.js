@@ -45,8 +45,6 @@ export default class BaseModel {
   }
 
   insertBatch(fields, batch) {
-    console.log(fields)
-    console.log(batch)
     const values = []
     const fullFields = [...fields, 'created_at', 'updated_at'].join(',')
     const fullValues = batch.map(v => {
@@ -58,7 +56,6 @@ export default class BaseModel {
       vars.push('NOW()')
       return vars.join(',')
     }).join('),(')
-    console.log(`INSERT INTO ${this.table} (${fullFields}) VALUES (${fullValues})`)
     return this.query(`INSERT INTO ${this.table} (${fullFields}) VALUES (${fullValues})`, values)
   }
 

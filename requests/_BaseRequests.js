@@ -2,7 +2,7 @@ import querystring from 'querystring'
 import Side from 'helpers/Side'
 
 export default class BaseRequests {
-  baseUrl = 'https://local.mesalva.com/api'
+  baseUrl = 'https://chalacabar.com.br/api'
   route = ''
 
   constructor(req = {}, options = {}) {
