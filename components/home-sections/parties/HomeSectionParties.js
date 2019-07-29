@@ -99,9 +99,7 @@ export default class HomeSectionParties extends Component {
     return style
   }
 
-  autoload = key => {
-    return this.state.active === key || this.state.active === key + 1
-  }
+  autoload = key => this.state.active === key
 
   render = () => (
     <Container>
