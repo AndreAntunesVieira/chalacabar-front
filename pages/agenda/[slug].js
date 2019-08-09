@@ -77,14 +77,16 @@ class Slug extends Component {
         <h1>{this.props.title}</h1>
         <Description {...this.props} />
       </section>
-      <section className="ph8 mh8" id="lista">
-        <ListName
-          onSubmit={this.onSubmit}
-          reset={this.reset}
-          blocked={this.props.listBlocked}
-          listTime={this.props.listTime.replace(/(.*:.*):.*/, '$1')}
-        />
-      </section>
+      {this.props.hasList && (
+        <section className="ph8 mh8" id="lista">
+          <ListName
+            onSubmit={this.onSubmit}
+            reset={this.reset}
+            blocked={this.props.listBlocked}
+            listTime={this.props.listTime.replace(/(.*:.*):.*/, '$1')}
+          />
+        </section>
+      )}
       <section className="ph8 mh8" id="vip">
         <PartyVipSubmition partyId={this.props.id} date={this.props.date} />
       </section>
