@@ -22,16 +22,19 @@ class PartyVipSubmition extends Component {
       const options = [
         { value: 31, disabled: reservedTables.includes(31), children: 'Camarote 1' },
         { value: 32, disabled: reservedTables.includes(32), children: 'Camarote 2' },
+        { value: 33, disabled: reservedTables.includes(32), children: 'Camarote 3' },
         { value: 34, disabled: reservedTables.includes(34), children: 'Camarote 4' },
         { value: 35, disabled: reservedTables.includes(35), children: 'Camarote 5' },
       ]
       const markers = [
         { value: 31, disabled: reservedTables.includes(31), id: 'vip-marker-camarote-1' },
         { value: 32, disabled: reservedTables.includes(32), id: 'vip-marker-camarote-2' },
+        { value: 33, disabled: reservedTables.includes(33), id: 'vip-marker-camarote-3' },
         { value: 34, disabled: reservedTables.includes(34), id: 'vip-marker-camarote-4' },
         { value: 35, disabled: reservedTables.includes(35), id: 'vip-marker-camarote-5' },
       ]
       for (let value = 1; value <= 21; value++) {
+        if (value >= 13 && value <= 17) continue
         const disabled = reservedTables.includes(value)
         options.push({ value, disabled: isSaturday || disabled, children: `Mesa ${value}` })
         markers.push({ value, disabled, id: `vip-marker-mesa-${value}` })
@@ -43,17 +46,29 @@ class PartyVipSubmition extends Component {
   selectTable = value => {
     const type = value > 30 ? 'Camarote' : 'Mesa'
     const marker = this.state.markers.find(marker => marker.value === value)
-    if(marker.disabled){
-      return this.props.showNotification({color: 'danger', text: `${type} indisponível para este dia.`, duration: 10000})
+    if (marker.disabled) {
+      return this.props.showNotification({
+        color: 'danger',
+        text: `${type} indisponível para este dia.`,
+        duration: 10000,
+      })
     }
-    if(this.state.isSaturday && type === 'Mesa'){
-      return this.props.showNotification({color: 'danger', text: `Não reservamos mesas aos sábados, apenas camarotes.`, duration: 10000})
+    if (this.state.isSaturday && type === 'Mesa') {
+      return this.props.showNotification({
+        color: 'danger',
+        text: `Não reservamos mesas aos sábados, apenas camarotes.`,
+        duration: 10000,
+      })
     }
     document.querySelector('select[name=tableNumber]').value = value
     location.hash = 'reservas'
     document.querySelector('#reservas input[name=name]').focus()
     const message = value > 30 ? `Camarote ${value - 30} selecionado` : `Mesa ${value} selecionada`
-    this.props.showNotification({color: 'warning', text: `${message}, preencha nome e telefone no formulário abaixo para continuar a reserva.`, duration: 10000})
+    this.props.showNotification({
+      color: 'warning',
+      text: `${message}, preencha nome e telefone no formulário abaixo para continuar a reserva.`,
+      duration: 10000,
+    })
   }
 
   submit = e => {
@@ -61,9 +76,13 @@ class PartyVipSubmition extends Component {
     if (this.state.finished) return null
     const target = e.target
     const data = serializeForm(target)
-    if(!data.name || !data.phone){
+    if (!data.name || !data.phone) {
       const field = !data.name ? 'nome' : 'telefone'
-      return this.props.showNotification({color: 'danger', text: `É necessário preencher o ${field} antes de reservar.`, duration: 10000})
+      return this.props.showNotification({
+        color: 'danger',
+        text: `É necessário preencher o ${field} antes de reservar.`,
+        duration: 10000,
+      })
     }
     const conf = confirm(
       'Sua reserva só estará confirmada após o pagamento parcial, \nentraremos em contato pelo celular informado para os detalhes de pagamento. \n\nOk, estou ciente.'
@@ -79,10 +98,12 @@ class PartyVipSubmition extends Component {
           duration: 15000,
         })
         const number = Number(data.tableNumber)
-        const modifier = number > 30 ? `camarote-${number-30}` : `mesa-${number}`
+        const modifier = number > 30 ? `camarote-${number - 30}` : `mesa-${number}`
         const id = `vip-marker-${modifier}`
-        const markers = this.state.markers.map(mark => mark.id === id ? ({ ...mark, disabled: true }) : mark)
-        const options = this.state.options.map(option => option.value === number ? ({ ...option, disabled: true }) : option)
+        const markers = this.state.markers.map(mark => (mark.id === id ? { ...mark, disabled: true } : mark))
+        const options = this.state.options.map(option =>
+          option.value === number ? { ...option, disabled: true } : option
+        )
         const finished = this.state.options.every(option => option.disabled)
         this.setState({ markers, options, finished })
       })
@@ -98,8 +119,8 @@ class PartyVipSubmition extends Component {
         Entenda como funciona a <A href="/reservas#entenda">reserva de camarotes clicando aqui</A>
       </div>
       <ImageContainer>
-        <img src="/img/layout/camarotes-vagos.jpg" />
-        {this.state.markers.map(({value, ...mark}) => (
+        <img src="/img/layout/camarotes-novos.jpg" />
+        {this.state.markers.map(({ value, ...mark }) => (
           <Marker {...mark} key={mark.id} onClick={() => this.selectTable(value)} />
         ))}
       </ImageContainer>
@@ -150,7 +171,7 @@ const Marker = styled.div`
     width: 19%;
     height: 12.2%;
     border-radius: 0 0 100% 0;
-    &:before{
+    &:before {
       position: absolute;
       bottom: 0;
       right: 0;
@@ -160,7 +181,7 @@ const Marker = styled.div`
       content: '';
       transform: skewY(-40.5deg) translate(0, -66%);
     }
-    &:after{
+    &:after {
       position: absolute;
       bottom: 0;
       right: 0;
@@ -171,13 +192,20 @@ const Marker = styled.div`
       transform: skewX(-48.5deg) translate(-136%, 0);
     }
   }
+  &#vip-marker-camarote-3 {
+    left: 76.4%;
+    top: 17.3%;
+    width: 19%;
+    height: 15.2%;
+    background: rgb(255, 0, 0);
+  }
   &#vip-marker-camarote-2 {
     left: 65.3%;
     top: 59.2%;
     width: 29.5%;
     height: 14.9%;
     border-radius: 70% 0 0 0;
-    &:before{
+    &:before {
       position: absolute;
       background: rgb(255, 0, 0);
       width: 37%;
@@ -185,7 +213,7 @@ const Marker = styled.div`
       content: '';
       transform: skewY(-42deg) translate(0, 92%);
     }
-    &:after{
+    &:after {
       position: absolute;
       background: rgb(255, 0, 0);
       width: 37%;
@@ -200,7 +228,7 @@ const Marker = styled.div`
     width: 27.8%;
     height: 12.3%;
     border-radius: 0 0 30% 32%;
-    &:before{
+    &:before {
       position: absolute;
       content: '';
       bottom: 0;
@@ -209,14 +237,14 @@ const Marker = styled.div`
       border-right: 4vw solid transparent;
       width: calc(100% - 8vw);
       left: 0;
-      @media (min-width: 760px){
+      @media (min-width: 760px) {
         border-top: 25px solid red;
         border-left: 33px solid transparent;
         border-right: 37px solid transparent;
         width: calc(100% - 69px);
       }
     }
-    &:after{
+    &:after {
       position: absolute;
       content: '';
       background-color: red;

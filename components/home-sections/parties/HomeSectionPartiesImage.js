@@ -1,5 +1,4 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import styled from 'styled-components'
 import A from 'components/common/A'
 import Button from 'components/common/Button'
@@ -25,9 +24,7 @@ const HomeSectionPartiesImage = ({ slug, src3, src2, userAgent, active, title, t
   </Container>
 )
 
-export default connect(state => ({
-  userAgent: '', //state.app.userAgent
-}))(HomeSectionPartiesImage)
+export default HomeSectionPartiesImage
 
 const Container = styled.div`
   width: 100vw;
@@ -39,6 +36,7 @@ const Container = styled.div`
 
     @media (min-width: 1200px) {
       height: 422px;
+      width: 100%;
     }
   }
 

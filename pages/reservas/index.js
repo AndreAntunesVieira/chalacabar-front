@@ -14,7 +14,7 @@ export default class VipPage extends Component {
       <PageTitle>Reservas | Chalaça Bar Ipanema</PageTitle>
       <Section>
         <h1>Camarotes</h1>
-        <img src="/img/layout/camarotes-vagos.jpg" />
+        <img src="/img/layout/camarotes-novos.jpg" alt="Esquema dos camarotes" />
         <div id="entenda" dangerouslySetInnerHTML={{ __html: this.props.content }} />
       </Section>
     </MainView>
