@@ -315,7 +315,7 @@ const Marker = styled.div`
   }
   &#vip-marker-mesa-11 {
     left: 76.4%;
-    top: 42.1%;
+    top: 40%;
     width: 8.2%;
     height: 5%;
   }
@@ -327,7 +327,7 @@ const Marker = styled.div`
   }
   &#vip-marker-mesa-9 {
     left: 76.4%;
-    top: 50%;
+    top: 48%;
     width: 8.2%;
     height: 5%;
   }
