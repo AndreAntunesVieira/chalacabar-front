@@ -167,9 +167,9 @@ const Marker = styled.div`
   }
   &#vip-marker-camarote-4 {
     left: 57%;
-    top: 53%;
+    top: 50%;
     width: 19%;
-    height: 12.2%;
+    height: 15.2%;
     border-radius: 0 0 100% 0;
     &:before {
       position: absolute;
@@ -177,7 +177,7 @@ const Marker = styled.div`
       right: 0;
       background: red;
       width: 62%;
-      height: 42%;
+      height: 36%;
       content: '';
       transform: skewY(-40.5deg) translate(0, -66%);
     }
