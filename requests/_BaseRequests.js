@@ -1,8 +1,10 @@
 import querystring from 'querystring'
 import Side from 'helpers/Side'
 
+const baseUrl = process.env.API || 'https://chalacabar.com.br/api'
+
 export default class BaseRequests {
-  baseUrl = 'https://chalacabar.com.br/api'
+  baseUrl = baseUrl
   route = ''
 
   constructor(req = {}, options = {}) {
