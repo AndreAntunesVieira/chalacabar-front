@@ -5,7 +5,7 @@ import A from 'components/common/A'
 
 const PhotoAlbum = ({ date, title, slug, src, full }) => (
   <Container href={`/fotos/${slug}`} className="banner" full={full}>
-    <img src={`https://img.chalacabar.com.br/images/${src}`} alt={`Foto da festa do dia ${date}`} />
+    <img src={process.env.BUCKET_URL + `/images/${src}`} alt={`Foto da festa do dia ${date}`} />
     <div>
       {getTitle(title, date)}
     </div>

@@ -23,7 +23,7 @@ export default class PartiesModel extends BaseModel {
   table = 'agenda'
 
   static image(src) {
-    return src ? `https://img.chalacabar.com.br/agenda/${src}` : null
+    return src ? process.env.BUCKET_URL + `agenda/${src}` : null
   }
 
   static format({

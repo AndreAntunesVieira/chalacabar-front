@@ -18,7 +18,7 @@ export default class PartiesRequests extends Requests {
 
 const parse = party => ({
   ...party,
-  src3: party.src3 ? party.src3 : 'https://img.chalacabar.com.br/agenda/default-src.jpeg',
-  src2: party.src2 ? party.src2 : 'https://img.chalacabar.com.br/agenda/default-src3.jpeg',
-  src: party.src ? party.src : 'https://img.chalacabar.com.br/agenda/default-src3.jpg',
+  src3: party.src3 ? party.src3 : process.env.BUCKET_URL + 'agenda/default-src.jpeg',
+  src2: party.src2 ? party.src2 : process.env.BUCKET_URL + 'agenda/default-src3.jpeg',
+  src: party.src ? party.src : process.env.BUCKET_URL + 'agenda/default-src3.jpg',
 })
