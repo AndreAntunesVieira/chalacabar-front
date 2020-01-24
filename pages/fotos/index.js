@@ -57,9 +57,11 @@ export default class Index extends Component {
             Carregar festas anteriores
           </Button>
         )}
-        {this.state.photos.map(album => (
-          <PhotoAlbum {...album} key={album.slug} />
-        ))}
+        <Container>
+          {this.state.photos.map(album => (
+            <PhotoAlbum {...album} key={album.slug} />
+          ))}
+        </Container>
         <PhotoNotification />
         {/*{this.state.maxPage < this.state.limit && (*/}
         {/*<Button full info onClick={this.loadMore} href={`/fotos?pag=${this.max}`}>*/}
@@ -70,6 +72,16 @@ export default class Index extends Component {
     </MainView>
   )
 }
+
+const Container = styled.div`
+  @media (min-width: 1200px) {
+    display: flex;
+    flex-wrap: wrap;
+    > a {
+      max-width: calc(33.33% - 24px);
+    }
+  }
+`
 
 const Section = styled.section`
   padding: 8px;
