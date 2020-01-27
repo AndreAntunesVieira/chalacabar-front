@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { GoogleMap, Marker, withGoogleMap, withScriptjs } from 'react-google-maps'
 import styled from 'styled-components'
 import Side from 'helpers/Side'
 import PartiesRequests from 'requests/PartiesRequests'
