@@ -20,7 +20,8 @@ class Slug extends Component {
     const slug = query.slug
     return new PartiesRequests(req).find(slug).then(party => {
       const now = new Date()
-      now.setHours(now.getHours() - now.getTimezoneOffset() / 60)
+      const hoursZone = 3//now.getTimezoneOffset() / 60
+      now.setHours(now.getHours() - hoursZone)
       const dateTime = party.date.replace(/T.*/, `T${party.listTime}.000Z`)
       const listBlocked = new Date(dateTime).getTime() < now.getTime()
       return { ...party, now: now.toISOString().replace(/\.\d{3}Z/, '.000Z'), listBlocked, dateTime }
