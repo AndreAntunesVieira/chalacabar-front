@@ -56,7 +56,7 @@ export default class PartiesModel extends BaseModel {
     this.query(
       `Select ${
         PartiesModel.defaultSelect
-        } FROM agenda WHERE DATE(data) >= DATE(NOW() + INTERVAL 6 HOUR) ORDER BY data ASC LIMIT 20`
+        } FROM agenda WHERE DATE(data) >= DATE(NOW() - INTERVAL 6 HOUR) ORDER BY data ASC LIMIT 20`
     ).then(result => result.map(PartiesModel.format))
 
   findBySlug = slug =>
