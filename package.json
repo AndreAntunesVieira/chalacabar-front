@@ -34,7 +34,7 @@
     "forever": "1.0.0",
     "isomorphic-unfetch": "3.0.0",
     "mysql": "2.17.1",
-    "next": "9.0.2",
+    "next": "9.3.3",
     "path-to-regexp": "2.4.0",
     "querystring": "0.2.0",
     "react": "16.6.3",
